@@ -3,14 +3,14 @@ plugins {
 }
 
 android {
-    compileSdk 30
+    compileSdk 31
 
     defaultConfig {
         applicationId "com.efojug.chatwithmepro"
-        minSdk 29
-        targetSdk 31
+        minSdk 30
+        targetSdk 32
         versionCode 1
-        versionName "3.5"
+        versionName '3.7'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -28,6 +28,11 @@ android {
     buildFeatures {
         viewBinding true
     }
+    dependenciesInfo {
+        includeInApk true
+        includeInBundle true
+    }
+    ndkVersion '21.4.7075529'
 }
 
 dependencies {
