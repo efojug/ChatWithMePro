@@ -8,20 +8,20 @@
 
     <EditText
         android:id="@+id/writeMessage"
-        android:layout_width="300dp"
+        android:layout_width="280dp"
         android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.144"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.91"
+        app:layout_constraintVertical_bias="0.935"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <Button
         android:id="@+id/sendMessage"
-        android:layout_width="77dp"
-        android:layout_height="48dp"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
         android:onClick="sendMessage"
         android:text="@string/send"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -29,21 +29,21 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/writeMessage"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.90" />
+        app:layout_constraintVertical_bias="0.935" />
 
     <View
         android:id="@+id/divider"
-        android:layout_width="409dp"
+        android:layout_width="410dp"
         android:layout_height="1dp"
         android:background="?android:attr/listDivider"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.841"
-        tools:layout_editor_absoluteX="1dp" />
+        app:layout_constraintVertical_bias="0.86"
+        tools:layout_editor_absoluteX="2dp" />
 
     <LinearLayout
-        android:layout_width="408dp"
-        android:layout_height="615dp"
+        android:layout_width="410dp"
+        android:layout_height="624dp"
         android:orientation="horizontal"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="-6dp" />
