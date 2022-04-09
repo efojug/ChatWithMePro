@@ -52,8 +52,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void sendMessage(View view) {
         EditText editText = findViewById(R.id.writeMessage);
-        Toast.makeText(this, editText.getText().toString(), Toast.LENGTH_SHORT).show();
-        editText.setText("");
+        if (!editText.getText().toString().equals("")) {
+            Toast.makeText(this, editText.getText().toString(), Toast.LENGTH_SHORT).show();
+            editText.setText("");
+        } else {
+            Toast.makeText(this, "不能发送空消息", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
