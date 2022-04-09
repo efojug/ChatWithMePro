@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk 30
 
     defaultConfig {
         applicationId "com.efojug.chatwithmepro"
@@ -28,6 +28,11 @@ android {
     buildFeatures {
         viewBinding true
     }
+    dependenciesInfo {
+        includeInApk true
+        includeInBundle true
+    }
+    ndkVersion '21.4.7075529'
 }
 
 dependencies {
