@@ -68,35 +68,50 @@ public class MainActivity extends AppCompatActivity {
         TextView msg13 = findViewById(R.id.msg13);
         TextView msg14 = findViewById(R.id.msg14);
         if (!editText.getText().toString().equals("")) {
-            Toast.makeText(this, editText.getText().toString(), Toast.LENGTH_SHORT).show();
             if (msg1.getText().toString().equals("")){
                 msg1.setText(editText.getText().toString());
+                Toast.makeText(this, "发送成功", Toast.LENGTH_SHORT).show();
             } else if (msg2.getText().toString().equals("")) {
                 msg2.setText(editText.getText().toString());
+                Toast.makeText(this, "发送成功", Toast.LENGTH_SHORT).show();
             } else if (msg3.getText().toString().equals("")) {
                 msg3.setText(editText.getText().toString());
+                Toast.makeText(this, "发送成功", Toast.LENGTH_SHORT).show();
             } else if (msg4.getText().toString().equals("")) {
                 msg4.setText(editText.getText().toString());
+                Toast.makeText(this, "发送成功", Toast.LENGTH_SHORT).show();
             } else if (msg5.getText().toString().equals("")) {
                 msg5.setText(editText.getText().toString());
+                Toast.makeText(this, "发送成功", Toast.LENGTH_SHORT).show();
             } else if (msg6.getText().toString().equals("")) {
                 msg6.setText(editText.getText().toString());
+                Toast.makeText(this, "发送成功", Toast.LENGTH_SHORT).show();
             } else if (msg7.getText().toString().equals("")) {
                 msg7.setText(editText.getText().toString());
+                Toast.makeText(this, "发送成功", Toast.LENGTH_SHORT).show();
             } else if (msg8.getText().toString().equals("")) {
                 msg8.setText(editText.getText().toString());
+                Toast.makeText(this, "发送成功", Toast.LENGTH_SHORT).show();
             } else if (msg9.getText().toString().equals("")) {
                 msg9.setText(editText.getText().toString());
+                Toast.makeText(this, "发送成功", Toast.LENGTH_SHORT).show();
             } else if (msg10.getText().toString().equals("")) {
                 msg10.setText(editText.getText().toString());
+                Toast.makeText(this, "发送成功", Toast.LENGTH_SHORT).show();
             } else if (msg11.getText().toString().equals("")) {
                 msg11.setText(editText.getText().toString());
+                Toast.makeText(this, "发送成功", Toast.LENGTH_SHORT).show();
             } else if (msg12.getText().toString().equals("")) {
                 msg12.setText(editText.getText().toString());
+                Toast.makeText(this, "发送成功", Toast.LENGTH_SHORT).show();
             } else if (msg13.getText().toString().equals("")) {
                 msg13.setText(editText.getText().toString());
+                Toast.makeText(this, "发送成功", Toast.LENGTH_SHORT).show();
             } else if (msg14.getText().toString().equals("")) {
                 msg14.setText(editText.getText().toString());
+                Toast.makeText(this, "发送成功", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "发送失败", Toast.LENGTH_SHORT).show();
             }
             editText.setText("");
         } else {
