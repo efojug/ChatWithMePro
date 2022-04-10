@@ -24,12 +24,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="@string/efojug"
+        android:text="@string/username"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="内测中 敬请期待" />
+        android:text="@string/autograph" />
 </LinearLayout>

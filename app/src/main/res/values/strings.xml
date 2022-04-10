@@ -2,8 +2,6 @@
     <string name="app_name">Chat With Me Pro</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">efojug</string>
-    <string name="nav_header_subtitle">内测中 敬请期待</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">设置</string>
 
@@ -12,5 +10,6 @@
     <string name="menu_slideshow">设置</string>
     <string name="notifications">消息</string>
     <string name="send">发送</string>
-    <string name="efojug">efojug</string>
+    <string name="username">efojug</string>
+    <string name="autograph">内测中 敬请期待</string>
 </resources>

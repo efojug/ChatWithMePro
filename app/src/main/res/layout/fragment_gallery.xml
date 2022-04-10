@@ -13,9 +13,8 @@
         android:layout_height="30dp"
         android:autofillHints=""
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="efojug"
-        android:textSize="20dp"
+        android:text="@string/username"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.120"
@@ -29,9 +28,8 @@
         android:layout_height="20dp"
         android:autofillHints=""
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="内测中 敬请期待"
-        android:textSize="16dp"
+        android:text="@string/autograph"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.138"
@@ -49,6 +47,8 @@
         app:layout_constraintHorizontal_bias="0.048"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.028" />
+        app:layout_constraintVertical_bias="0.028"
+        tools:ignore="ContentDescription" />
+    <!--        android:contentDescription="@string/username"-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
