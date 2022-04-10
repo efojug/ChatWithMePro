@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
@@ -52,8 +53,51 @@ public class MainActivity extends AppCompatActivity {
 
     public void sendMessage(View view) {
         EditText editText = findViewById(R.id.writeMessage);
+        TextView msg1 = findViewById(R.id.msg1);
+        TextView msg2 = findViewById(R.id.msg2);
+        TextView msg3 = findViewById(R.id.msg3);
+        TextView msg4 = findViewById(R.id.msg4);
+        TextView msg5 = findViewById(R.id.msg5);
+        TextView msg6 = findViewById(R.id.msg6);
+        TextView msg7 = findViewById(R.id.msg7);
+        TextView msg8 = findViewById(R.id.msg8);
+        TextView msg9 = findViewById(R.id.msg9);
+        TextView msg10 = findViewById(R.id.msg10);
+        TextView msg11 = findViewById(R.id.msg11);
+        TextView msg12 = findViewById(R.id.msg12);
+        TextView msg13 = findViewById(R.id.msg13);
+        TextView msg14 = findViewById(R.id.msg14);
         if (!editText.getText().toString().equals("")) {
             Toast.makeText(this, editText.getText().toString(), Toast.LENGTH_SHORT).show();
+            if (msg1.getText().toString().equals("")){
+                msg1.setText(editText.getText().toString());
+            } else if (msg2.getText().toString().equals("")) {
+                msg2.setText(editText.getText().toString());
+            } else if (msg3.getText().toString().equals("")) {
+                msg3.setText(editText.getText().toString());
+            } else if (msg4.getText().toString().equals("")) {
+                msg4.setText(editText.getText().toString());
+            } else if (msg5.getText().toString().equals("")) {
+                msg5.setText(editText.getText().toString());
+            } else if (msg6.getText().toString().equals("")) {
+                msg6.setText(editText.getText().toString());
+            } else if (msg7.getText().toString().equals("")) {
+                msg7.setText(editText.getText().toString());
+            } else if (msg8.getText().toString().equals("")) {
+                msg8.setText(editText.getText().toString());
+            } else if (msg9.getText().toString().equals("")) {
+                msg9.setText(editText.getText().toString());
+            } else if (msg10.getText().toString().equals("")) {
+                msg10.setText(editText.getText().toString());
+            } else if (msg11.getText().toString().equals("")) {
+                msg11.setText(editText.getText().toString());
+            } else if (msg12.getText().toString().equals("")) {
+                msg12.setText(editText.getText().toString());
+            } else if (msg13.getText().toString().equals("")) {
+                msg13.setText(editText.getText().toString());
+            } else if (msg14.getText().toString().equals("")) {
+                msg14.setText(editText.getText().toString());
+            }
             editText.setText("");
         } else {
             Toast.makeText(this, "不能发送空消息", Toast.LENGTH_SHORT).show();
