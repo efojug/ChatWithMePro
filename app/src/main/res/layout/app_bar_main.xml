@@ -22,7 +22,6 @@
             android:clipToPadding="true"
             android:minHeight="48dp"
             app:popupTheme="@style/Theme.ChatWithMePro.PopupOverlay" />
-
     </com.google.android.material.appbar.AppBarLayout>
 
     <include

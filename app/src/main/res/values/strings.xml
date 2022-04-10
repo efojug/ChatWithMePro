@@ -12,4 +12,8 @@
     <string name="send">发送</string>
     <string name="username">efojug</string>
     <string name="autograph">内测中 敬请期待</string>
+    <string name="usersettings1">智能优化(出现闪退等问题请关闭)</string>
+    <string name="usersettings2">启用实验性功能(可能会导致不稳定)</string>
+    <string name="usersettings3">用户设置3</string>
+    <string name="usersettings4">用户设置4</string>
 </resources>
