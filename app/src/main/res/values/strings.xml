@@ -11,9 +11,17 @@
     <string name="notifications">消息</string>
     <string name="send">发送</string>
     <string name="username">efojug</string>
-    <string name="autograph">coming s∞n...</string>
+    <string name="autograph">coming s∞n....i</string>
     <string name="usersettings1">智能优化(出现闪退等问题请关闭)</string>
     <string name="usersettings2">启用实验性功能(可能会导致不稳定)</string>
     <string name="usersettings3">用户设置3</string>
     <string name="usersettings4">用户设置4</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_world">Hello world!</string>
+    <!-- -
+    This is an ad unit ID for a banner test ad. Replace with your own banner ad unit id.
+    For more information, see https://support.google.com/admob/answer/3052638
+<!- -->
+    <string name="banner_ad_unit_id">YOUR_BANNER_AD_UNIT_ID</string>
 </resources>
