@@ -58,10 +58,37 @@
         android:text="登录"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintHorizontal_bias="0.046"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.197" />
+
+    <Button
+        android:id="@+id/BindAuth"
+        android:layout_width="136dp"
+        android:layout_height="45dp"
+        android:onClick="bindAuth"
+        android:text="绑定用户信息"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.058"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.131" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="179dp"
+        android:layout_height="21dp"
+        android:text="请先绑定用户信息再登录"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.745"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.138" />
+
     <!--        android:contentDescription="@string/username"-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

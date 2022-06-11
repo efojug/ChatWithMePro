@@ -94,14 +94,10 @@ public class MainActivity extends AppCompatActivity {
                 .setNegativeButtonText("取消")
                 .build();
     }
-
-    public void Login(View v) {
-        Button biometricLoginButton = findViewById(R.id.Login);
-        biometricLoginButton.setOnClickListener(view -> {
-            biometricPrompt.authenticate(promptInfo);
-        });
+    public void bindAuth(View v) {
+        findViewById(R.id.Login).setOnClickListener(view -> biometricPrompt.authenticate(promptInfo));
+        Toast.makeText(getApplicationContext(), "绑定成功", Toast.LENGTH_SHORT).show();
     }
-
     public void sendMessage(View view) {
         EditText editText = findViewById(R.id.writeMessage);
         TextView msg1 = findViewById(R.id.msg1);
