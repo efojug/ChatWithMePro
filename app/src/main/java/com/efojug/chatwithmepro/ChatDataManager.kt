@@ -1,7 +1,7 @@
 package com.efojug.chatwithmepro
 
 object ChatDataManager {
-    private val list = ArrayList<ChatData>()
+    private val list = mutableListOf<ChatData>()
     var userName = ""
 
     init {

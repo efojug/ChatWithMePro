@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun ChatRoom(list: ArrayList<ChatData>) {
+fun ChatRoom(list: MutableList<ChatData>) {
     Column {
         LazyColumn(
             modifier = Modifier
@@ -50,9 +50,9 @@ fun ChatRoom(list: ArrayList<ChatData>) {
                 value = text,
                 onValueChange = {
                     text = it
-                    if (it.length > b) {
-                        b *= 2
-                        height *= 2
+                    if (it.length > b && height <= 40) {
+                        b += 12
+                        height += 8
                     } else if (it.length < 12) {
                         b = 12
                         height = 0
@@ -70,7 +70,11 @@ fun ChatRoom(list: ArrayList<ChatData>) {
             )
             Spacer(modifier = Modifier.padding(horizontal = 4.dp))
             Button(
-                onClick = { /*TODO*/ },
+                onClick = {
+                    ChatDataManager.add(ChatData("efojug", "1234789", text))
+                    text = ""
+                    height = 0
+                },
                 shape = RoundedCornerShape(8.dp),
                 colors = ButtonDefaults.buttonColors(Color(0xFF06C361))
             ) {
@@ -79,7 +83,7 @@ fun ChatRoom(list: ArrayList<ChatData>) {
         }
     }
 }
-
+,
 @Composable
 fun MsgItem(chatData: ChatData) {
     Box(modifier = Modifier.fillMaxWidth()) {
@@ -103,11 +107,11 @@ fun MsgItem(chatData: ChatData) {
                 Text(text = "${chatData.userName} :", fontSize = 12.sp, color = Color.LightGray)
                 Surface(
                     modifier = Modifier
-                        .padding(4.dp), shape = RoundedCornerShape(6.dp),
+                        .padding(start = 4.dp , end = 120.dp, top = 4.dp, bottom = 4.dp), shape = RoundedCornerShape(6.dp),
                     color =
-                    if (chatData.userName == ChatDataManager.userName) Color(0xFF95EC69) else Color.White
+                    if (chatData.userName == ChatDataManager.userName) Color(0xFF95EC69) else Color(0xFF12B7F5)
                 ) {
-                    Text(text = chatData.msg, modifier = Modifier.padding(3.dp))
+                    Text(text = chatData.msg, modifier = Modifier.padding(3.dp), color = if (chatData.userName != ChatDataManager.userName) Color.White else Color.Black)
                 }
             }
         }
