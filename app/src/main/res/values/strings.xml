@@ -19,9 +19,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="hello_world">Hello world!</string>
-    <!-- -
-    This is an ad unit ID for a banner test ad. Replace with your own banner ad unit id.
-    For more information, see https://support.google.com/admob/answer/3052638
-<!- -->
+
     <string name="banner_ad_unit_id">YOUR_BANNER_AD_UNIT_ID</string>
 </resources>
