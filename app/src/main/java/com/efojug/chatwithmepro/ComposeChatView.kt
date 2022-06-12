@@ -56,10 +56,10 @@ fun ChatRoom(list: MutableList<ChatData>) {
                 onValueChange = {
                     text = it
                     if (it.length > b && height <= 40) {
-                        b += 12
-                        height += 8
-                    } else if (it.length < 12) {
-                        b = 12
+                        b += 18
+                        height += 18
+                    } else if (it.length < 18) {
+                        b = 16
                         height = 0
                     }
                 },
