@@ -39,12 +39,11 @@ fun ChatRoom(list: ArrayList<ChatData>) {
 
         val heightDp by animateDpAsState(targetValue = if (height == 0) 40.dp else (height + 40).dp)
 
-        var b = 12
-
         Row(
-            modifier = Modifier.padding(bottom = 53.dp, start = 8.dp, end = 8.dp),
+            modifier = Modifier.padding(bottom = 20.dp, start = 8.dp, end = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            var b = 12
             TextField(
                 value = text,
                 onValueChange = {
@@ -52,9 +51,11 @@ fun ChatRoom(list: ArrayList<ChatData>) {
                     if (it.length > b) {
                         b += 12
                         height += 20
-                    } else {
+                    } else if (it.length < 12) {
                         b = 12
                         height = 0
+                    } else if (b > 12) {
+                        b = 12
                     }
                 },
                 colors = TextFieldDefaults.textFieldColors(
@@ -122,7 +123,7 @@ fun MsgItemPreView() {
         ChatData(
             "oppo",
             "143457",
-            "felpfelpfelpfelflpfelpfelpfelplpfelpfelpfelpfelpfelpfewlp[fewlp[fewlflepflplpelpfelpfelpfelpefpl飞利浦费龙凤配"
+            "fhsajasjk刷机想吃饺子选从欧艾斯糊sicxnm,asdhfe配"
         ),
         ChatData("xiaomi", "5973951", "干翻华为"),
         ChatData("huawei", "358109751", "你他妈是来砸场子的吧 傻逼"),
