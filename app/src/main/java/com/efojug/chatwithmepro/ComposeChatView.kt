@@ -1,5 +1,6 @@
 package com.efojug.chatwithmepro
 
+import android.widget.EditText
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -7,7 +8,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,6 +16,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.efojug.chatwithmepro.MainActivity.user
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun ChatRoom(list: MutableList<ChatData>) {
@@ -23,6 +27,7 @@ fun ChatRoom(list: MutableList<ChatData>) {
             modifier = Modifier
                 .fillMaxSize()
                 .weight(1f)
+                .padding(top = 20.dp)
         ) {
             itemsIndexed(list) { index: Int, item: ChatData ->
                 MsgItem(item)
@@ -71,7 +76,22 @@ fun ChatRoom(list: MutableList<ChatData>) {
             Spacer(modifier = Modifier.padding(horizontal = 4.dp))
             Button(
                 onClick = {
-                    ChatDataManager.add(ChatData("efojug", "1234789", text))
+                    if (user[0]) ChatDataManager.add(
+                        ChatData(
+//                            findViewById<EditText>(R.id.username).toString(),
+                            "efojug",
+                            LocalDateTime.now()
+                                .format(DateTimeFormatter.ofPattern("MM-dd HH:mm:ss")).toString(),
+                            text
+                        )
+                    ) else ChatDataManager.add(
+                        ChatData(
+                            "Guest",
+                            LocalDateTime.now()
+                                .format(DateTimeFormatter.ofPattern("MM-dd HH:mm:ss")).toString(),
+                            text
+                        )
+                    )
                     text = ""
                     height = 0
                 },
@@ -97,7 +117,7 @@ fun MsgItem(chatData: ChatData) {
     Surface {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(
-                imageVector = Icons.Default.Home,
+                imageVector = Icons.Default.AccountBox,
                 contentDescription = "",
                 modifier = Modifier
                     .size(32.dp)
@@ -106,12 +126,22 @@ fun MsgItem(chatData: ChatData) {
             Column {
                 Text(text = "${chatData.userName} :", fontSize = 12.sp, color = Color.LightGray)
                 Surface(
-                    modifier = Modifier
-                        .padding(start = 4.dp , end = 120.dp, top = 4.dp, bottom = 4.dp), shape = RoundedCornerShape(6.dp),
-                    color =
-                    if (chatData.userName == ChatDataManager.userName) Color(0xFF95EC69) else Color(0xFF12B7F5)
+                    modifier = Modifier.padding(
+                        start = 4.dp,
+                        end = 120.dp,
+                        top = 4.dp,
+                        bottom = 4.dp
+                    ),
+                    shape = RoundedCornerShape(6.dp),
+                    color = if (chatData.userName == ChatDataManager.userName) Color(0xFF95EC69) else Color(
+                        0xFF12B7F5
+                    )
                 ) {
-                    Text(text = chatData.msg, modifier = Modifier.padding(8.dp), color = if (chatData.userName != ChatDataManager.userName) Color.White else Color.Black)
+                    Text(
+                        text = chatData.msg,
+                        modifier = Modifier.padding(8.dp),
+                        color = if (chatData.userName != ChatDataManager.userName) Color.White else Color.Black
+                    )
                 }
             }
         }
@@ -122,16 +152,12 @@ fun MsgItem(chatData: ChatData) {
 @Composable
 fun MsgItemPreView() {
     val list = listOf(
-        ChatData("xiaomi", "114514", "miui14 fa bu"),
-        ChatData("apple", "114515", "wo cao ni ma"),
-        ChatData(
-            "oppo",
-            "143457",
-            "fhsajasjk刷机想吃饺子选从欧艾斯糊sicxnm,asdhfe配"
-        ),
-        ChatData("xiaomi", "5973951", "干翻华为"),
-        ChatData("huawei", "358109751", "你他妈是来砸场子的吧 傻逼"),
-        ChatData("efojug", "111", "Compose On Top")
+        ChatData("xiaomi", "00-00 00:00:00", "MIUI"),
+        ChatData("HUAWEI", "00-00 00:00:00", "HarmoryOS"),
+        ChatData("OPPO", "00-00 00:00:00", "ColorOS"),
+        ChatData("MEIZU", "00-00 00:00:00", "Flyme"),
+        ChatData("Apple", "00-00 00:00:00", "iOS"),
+        ChatData("vivo", "00-00 00:00:00", "OriginOS")
     )
 
     ChatRoom(list = ArrayList(list))

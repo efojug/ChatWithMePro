@@ -7,12 +7,12 @@ object ChatDataManager {
     init {
         list.addAll(
             listOf(
-                ChatData("xiaomi", "114514", "MIUI14 发布"),
-                ChatData("apple", "114515", "L"),
-                ChatData("oppo", "143457", "felpfelpfelpfelflpfelpfelpfelplpfelpfelpfelpfelpfelpfewlp[fewlp[fewlflepflplpelpfelpfelpfelpefpl飞利浦费龙凤配"),
-                ChatData("xiaomi", "5973951", "干翻华为"),
-                ChatData("huawei", "358109751", "你他妈是来砸场子的吧 傻逼"),
-                ChatData("efojug", "111", "Compose On Top")
+                ChatData("xiaomi", "00-00 00:00:00", "MIUI"),
+                ChatData("HUAWEI", "00-00 00:00:00", "HarmoryOS"),
+                ChatData("OPPO", "00-00 00:00:00", "ColorOS"),
+                ChatData("MEIZU", "00-00 00:00:00", "Flyme"),
+                ChatData("Apple", "00-00 00:00:00", "iOS"),
+                ChatData("vivo", "00-00 00:00:00", "OriginOS")
             )
         )
     }

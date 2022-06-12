@@ -7,24 +7,25 @@
     tools:context=".ui.gallery.GalleryFragment">
 
 
-    <TextView
+    <EditText
         android:id="@+id/username"
         android:layout_width="180dp"
-        android:layout_height="30dp"
+        android:layout_height="48dp"
         android:autofillHints=""
         android:ems="10"
         android:text="@string/username"
         android:textSize="20sp"
+        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.120"
+        app:layout_constraintHorizontal_bias="0.132"
         app:layout_constraintStart_toEndOf="@+id/headPortrait"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.025" />
+        app:layout_constraintVertical_bias="0.018" />
 
     <TextView
         android:id="@+id/autograph"
-        android:layout_width="200dp"
+        android:layout_width="180dp"
         android:layout_height="24dp"
         android:autofillHints=""
         android:ems="10"
@@ -32,10 +33,10 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.138"
+        app:layout_constraintHorizontal_bias="0.132"
         app:layout_constraintStart_toEndOf="@+id/headPortrait"
         app:layout_constraintTop_toBottomOf="@+id/username"
-        app:layout_constraintVertical_bias="0.020" />
+        app:layout_constraintVertical_bias="0.012" />
 
     <ImageView
         android:id="@+id/headPortrait"
@@ -52,20 +53,21 @@
 
     <Button
         android:id="@+id/Login"
-        android:layout_width="70dp"
-        android:layout_height="47dp"
+        android:layout_width="135dp"
+        android:layout_height="45dp"
         android:onClick="Login"
         android:text="登录"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.046"
+        app:layout_constraintHorizontal_bias="0.057"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.197" />
+        app:layout_constraintVertical_bias="0.131" />
 
     <Button
         android:id="@+id/BindAuth"
-        android:layout_width="136dp"
+        android:layout_width="135dp"
         android:layout_height="45dp"
         android:onClick="bindAuth"
         android:text="绑定用户信息"
@@ -76,19 +78,46 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.131" />
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="179dp"
-        android:layout_height="21dp"
-        android:text="请先绑定用户信息再登录"
-        android:textSize="16dp"
+    <Button
+        android:id="@+id/changeUsername"
+        android:layout_width="110dp"
+        android:layout_height="50dp"
+        android:onClick="ChangeUsername"
+        android:text="修改用户名"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.745"
+        app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.138" />
+        app:layout_constraintVertical_bias="0.019" />
 
-    <!--        android:contentDescription="@string/username"-->
+    <Button
+        android:id="@+id/outLogin"
+        android:layout_width="135dp"
+        android:layout_height="45dp"
+        android:onClick="outLogin"
+        android:text="退出登录"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.057"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.131" />
+
+    <Button
+        android:id="@+id/changeUsernameOK"
+        android:layout_width="110dp"
+        android:layout_height="50dp"
+        android:onClick="ChangeUsernameOK"
+        android:text="完成"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.953"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.019" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

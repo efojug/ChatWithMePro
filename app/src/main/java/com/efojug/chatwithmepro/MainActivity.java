@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private BiometricPrompt biometricPrompt;
     private BiometricPrompt.PromptInfo promptInfo;
     private AppBarConfiguration mAppBarConfiguration;
+    static boolean[] user = {false};
+    public static int LoginLevel = 0;
 
     @SuppressLint("ObsoleteSdkInt")
     @Override
@@ -58,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         Executor executor = ContextCompat.getMainExecutor(this);
-        //StatusBarUtil.setColor(MainActivity.this,getResources().getColor(R.color.colorPrimary),0);
         biometricPrompt = new BiometricPrompt(MainActivity.this,
                 executor, new BiometricPrompt.AuthenticationCallback() {
             @Override
@@ -70,6 +71,9 @@ public class MainActivity extends AppCompatActivity {
             public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
                 Toast.makeText(getApplicationContext(), "验证成功", Toast.LENGTH_SHORT).show();
+                LoginLevel2(null);
+                user[0] = true;
+                Toast.makeText(getApplicationContext(), "应用初始化完成", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -85,13 +89,62 @@ public class MainActivity extends AppCompatActivity {
                 .build();
     }
 
-    public void bindAuth(View v) {
+    public void bindAuth(View a) {
+        LoginLevel1(a);
         findViewById(R.id.Login).setOnClickListener(view -> biometricPrompt.authenticate(promptInfo));
         Toast.makeText(getApplicationContext(), "绑定成功", Toast.LENGTH_SHORT).show();
     }
 
     public void sendMessage(View view) {
         EditText editText = findViewById(R.id.writeMessage);
+    }
+
+    public void outLogin(View b) {
+        LoginLevel0(b);
+        user[0] = false;
+        Toast.makeText(getApplicationContext(), "成功", Toast.LENGTH_SHORT).show();
+    }
+
+    public void ChangeUsernameOK(View view) {
+        findViewById(R.id.changeUsername).setVisibility(View.VISIBLE);
+        findViewById(R.id.changeUsernameOK).setVisibility(View.INVISIBLE);
+        findViewById(R.id.username).setEnabled(false);
+    }
+
+    public void ChangeUsername(View view) {
+        findViewById(R.id.changeUsername).setVisibility(View.INVISIBLE);
+        findViewById(R.id.username).setEnabled(true);
+        findViewById(R.id.changeUsernameOK).setVisibility(View.VISIBLE);
+    }
+
+    public void LoginLevel0(View view) {
+        findViewById(R.id.changeUsername).setVisibility(View.INVISIBLE);
+        findViewById(R.id.changeUsernameOK).setVisibility(View.INVISIBLE);
+        findViewById(R.id.username).setEnabled(false);
+        findViewById(R.id.Login).setVisibility(View.INVISIBLE);
+        findViewById(R.id.outLogin).setVisibility(View.INVISIBLE);
+        findViewById(R.id.BindAuth).setVisibility(View.VISIBLE);
+        LoginLevel = 0;
+    }
+
+    public void LoginLevel1(View view) {
+        findViewById(R.id.changeUsername).setVisibility(View.INVISIBLE);
+        findViewById(R.id.changeUsernameOK).setVisibility(View.INVISIBLE);
+        findViewById(R.id.username).setEnabled(false);
+        findViewById(R.id.Login).setVisibility(View.VISIBLE);
+        findViewById(R.id.outLogin).setVisibility(View.INVISIBLE);
+        findViewById(R.id.BindAuth).setVisibility(View.INVISIBLE);
+        LoginLevel = 1;
+    }
+
+    public void LoginLevel2(View view) {
+        findViewById(R.id.changeUsername).setVisibility(View.VISIBLE);
+        findViewById(R.id.changeUsernameOK).setVisibility(View.INVISIBLE);
+        findViewById(R.id.username).setEnabled(false);
+        findViewById(R.id.Login).setVisibility(View.INVISIBLE);
+        findViewById(R.id.outLogin).setVisibility(View.VISIBLE);
+        findViewById(R.id.BindAuth).setVisibility(View.INVISIBLE);
+        LoginLevel = 2;
     }
 
     @Override
