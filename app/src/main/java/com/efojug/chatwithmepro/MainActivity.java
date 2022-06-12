@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         if (android.os.Build.VERSION.SDK_INT < 30) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         Executor executor = ContextCompat.getMainExecutor(this);
+        //StatusBarUtil.setColor(MainActivity.this,getResources().getColor(R.color.colorPrimary),0);
         biometricPrompt = new BiometricPrompt(MainActivity.this,
                 executor, new BiometricPrompt.AuthenticationCallback() {
             @Override
