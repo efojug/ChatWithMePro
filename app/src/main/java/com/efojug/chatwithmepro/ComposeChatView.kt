@@ -43,19 +43,19 @@ fun ChatRoom(list: ArrayList<ChatData>) {
             modifier = Modifier.padding(bottom = 20.dp, start = 8.dp, end = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            var b = 12
+            var b by remember {
+                mutableStateOf(12)
+            }
             TextField(
                 value = text,
                 onValueChange = {
                     text = it
                     if (it.length > b) {
-                        b += 12
-                        height += 20
+                        b *= 2
+                        height *= 2
                     } else if (it.length < 12) {
                         b = 12
                         height = 0
-                    } else if (b > 12) {
-                        b = 12
                     }
                 },
                 colors = TextFieldDefaults.textFieldColors(
