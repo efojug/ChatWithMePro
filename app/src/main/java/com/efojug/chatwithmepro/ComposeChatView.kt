@@ -83,7 +83,7 @@ fun ChatRoom(list: MutableList<ChatData>) {
         }
     }
 }
-,
+
 @Composable
 fun MsgItem(chatData: ChatData) {
     Box(modifier = Modifier.fillMaxWidth()) {
@@ -111,7 +111,7 @@ fun MsgItem(chatData: ChatData) {
                     color =
                     if (chatData.userName == ChatDataManager.userName) Color(0xFF95EC69) else Color(0xFF12B7F5)
                 ) {
-                    Text(text = chatData.msg, modifier = Modifier.padding(3.dp), color = if (chatData.userName != ChatDataManager.userName) Color.White else Color.Black)
+                    Text(text = chatData.msg, modifier = Modifier.padding(8.dp), color = if (chatData.userName != ChatDataManager.userName) Color.White else Color.Black)
                 }
             }
         }
