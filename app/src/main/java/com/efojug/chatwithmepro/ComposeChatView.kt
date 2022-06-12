@@ -155,7 +155,6 @@ fun MsgItemPreView() {
         ChatData("HUAWEI", "00-00 00:00:00", "HarmoryOS"),
         ChatData("OPPO", "00-00 00:00:00", "ColorOS"),
         ChatData("MEIZU", "00-00 00:00:00", "Flyme"),
-        ChatData("Apple", "00-00 00:00:00", "iOS"),
         ChatData("vivo", "00-00 00:00:00", "OriginOS")
     )
 
