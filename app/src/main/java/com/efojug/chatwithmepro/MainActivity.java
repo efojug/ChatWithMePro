@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.changeUsername).setVisibility(View.VISIBLE);
         findViewById(R.id.changeUsernameOK).setVisibility(View.INVISIBLE);
         findViewById(R.id.username).setEnabled(false);
-        username = (findViewById(R.id.username)).getText().toString();
+        username = (findViewById(R.id.username)).getText();
     }
 
     public void ChangeUsername(View view) {
