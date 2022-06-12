@@ -1,6 +1,5 @@
 package com.efojug.chatwithmepro
 
-import android.widget.EditText
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.efojug.chatwithmepro.MainActivity.user
+import com.efojug.chatwithmepro.MainActivity.username
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -78,8 +78,7 @@ fun ChatRoom(list: MutableList<ChatData>) {
                 onClick = {
                     if (user[0]) ChatDataManager.add(
                         ChatData(
-//                            findViewById<EditText>(R.id.username).toString(),
-                            "efojug",
+                            username,
                             LocalDateTime.now()
                                 .format(DateTimeFormatter.ofPattern("MM-dd HH:mm:ss")).toString(),
                             text

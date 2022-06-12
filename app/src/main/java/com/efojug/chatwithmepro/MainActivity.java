@@ -105,10 +105,13 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "成功", Toast.LENGTH_SHORT).show();
     }
 
+    public static String username = "efojug";
+
     public void ChangeUsernameOK(View view) {
         findViewById(R.id.changeUsername).setVisibility(View.VISIBLE);
         findViewById(R.id.changeUsernameOK).setVisibility(View.INVISIBLE);
         findViewById(R.id.username).setEnabled(false);
+        //username = (EditText)findViewById(R.id.username).getText();
     }
 
     public void ChangeUsername(View view) {
