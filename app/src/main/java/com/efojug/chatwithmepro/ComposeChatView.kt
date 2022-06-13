@@ -114,7 +114,7 @@ fun MsgItem(chatData: ChatData) {
         )
     }
     Surface {
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = if (chatData.userName == "efojug") Arrangement.End else Arrangement.Start) {
             Icon(
                 imageVector = Icons.Default.AccountBox,
                 contentDescription = "",
@@ -155,7 +155,6 @@ fun MsgItemPreView() {
         ChatData("HUAWEI", "00-00 00:00:00", "HarmoryOS"),
         ChatData("OPPO", "00-00 00:00:00", "ColorOS"),
         ChatData("MEIZU", "00-00 00:00:00", "Flyme"),
-        ChatData("Apple", "00-00 00:00:00", "iOS"),
         ChatData("vivo", "00-00 00:00:00", "OriginOS")
     )
 
