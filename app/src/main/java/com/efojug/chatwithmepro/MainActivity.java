@@ -3,7 +3,6 @@ package com.efojug.chatwithmepro;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -22,9 +21,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.efojug.chatwithmepro.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.Objects;
 import java.util.concurrent.Executor;
-import java.util.zip.Inflater;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -76,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "验证成功", Toast.LENGTH_SHORT).show();
                 LoginLevel2(null);
                 user[0] = true;
+                Toast.makeText(getApplicationContext(), "应用初始化完成", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -91,8 +89,8 @@ public class MainActivity extends AppCompatActivity {
                 .build();
     }
 
-    public void bindAuth(View view2) {
-        LoginLevel1(view2);
+    public void bindAuth(View a) {
+        LoginLevel1(a);
         findViewById(R.id.Login).setOnClickListener(view -> biometricPrompt.authenticate(promptInfo));
         Toast.makeText(getApplicationContext(), "绑定成功", Toast.LENGTH_SHORT).show();
     }
@@ -101,8 +99,8 @@ public class MainActivity extends AppCompatActivity {
         EditText editText = findViewById(R.id.writeMessage);
     }
 
-    public void outLogin(View view) {
-        LoginLevel0(view);
+    public void outLogin(View b) {
+        LoginLevel0(b);
         user[0] = false;
         Toast.makeText(getApplicationContext(), "成功", Toast.LENGTH_SHORT).show();
     }
@@ -110,10 +108,10 @@ public class MainActivity extends AppCompatActivity {
     public static String username = "efojug";
 
     public void ChangeUsernameOK(View view) {
-        username = ((EditText) findViewById(R.id.username)).getText().toString();
         findViewById(R.id.changeUsername).setVisibility(View.VISIBLE);
         findViewById(R.id.changeUsernameOK).setVisibility(View.INVISIBLE);
         findViewById(R.id.username).setEnabled(false);
+        //username = (findViewById(R.id.username)).getText();
     }
 
     public void ChangeUsername(View view) {
