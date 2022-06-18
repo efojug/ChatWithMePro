@@ -1,7 +1,10 @@
 package com.efojug.chatwithmepro;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -44,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        if (android.os.Build.VERSION.SDK_INT < 30) {
+        if (Build.VERSION.SDK_INT < 30) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
@@ -55,7 +58,9 @@ public class MainActivity extends AppCompatActivity {
             actionBar.setDisplayShowTitleEnabled(true);
         }
         DrawerLayout drawer = binding.drawerLayout;
-        drawer.setFitsSystemWindows(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            drawer.setFitsSystemWindows(true);
+        }
         drawer.setClipToPadding(false);
         NavigationView navigationView = binding.navView;
         mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow).setOpenableLayout(drawer).build();
