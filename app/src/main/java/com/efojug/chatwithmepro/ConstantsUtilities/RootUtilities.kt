@@ -1,7 +1,6 @@
 package com.efojug.chatwithmepro.ConstantsUtilities
 
 import android.os.Build
-import androidx.compose.material.Checkbox
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
@@ -141,6 +140,4 @@ object RootUtilities {
             }
             return sdkInt >= 31
         }
-
-
 }
