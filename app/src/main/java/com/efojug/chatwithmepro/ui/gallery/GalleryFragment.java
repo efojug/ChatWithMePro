@@ -17,8 +17,6 @@ public class GalleryFragment extends Fragment {
     private FragmentGalleryBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//        TelephonyManager IMEIManager = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
-//        String IMEI = IMEIManager.getDeviceId();
         binding = FragmentGalleryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         return root;

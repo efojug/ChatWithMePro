@@ -147,6 +147,7 @@ fun MsgItem(chatData: ChatData) {
     }
 }
 
+
 @Preview(showBackground = true)
 @Composable
 fun MsgItemPreView() {

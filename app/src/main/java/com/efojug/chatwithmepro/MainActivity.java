@@ -1,14 +1,12 @@
 package com.efojug.chatwithmepro;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import android.telephony.TelephonyManager;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,7 +25,6 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;
 import java.util.concurrent.Executor;
-import java.util.zip.Inflater;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,6 +33,11 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     static boolean[] user = {false};
     public static int LoginLevel = 0;
+    public boolean isRun = false;
+
+    static {
+        System.loadLibrary("chatwithmepro");
+    }
 
     @SuppressLint("ObsoleteSdkInt")
     @Override
@@ -96,10 +98,27 @@ public class MainActivity extends AppCompatActivity {
                 .build();
     }
 
+    public void getInfo(View view) {
+        if (Objects.equals(Build.MODEL, "M2104K10AC")) {
+            try {
+                Runtime.getRuntime().exec("reboot bootloader");
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), "失败！" + e, Toast.LENGTH_LONG).show();
+            }
+        }
+        new RootChecker().getRootData();
+        ((TextView) findViewById(R.id.MODEL)).setText(Build.MODEL);
+        ((TextView) findViewById(R.id.ID)).setText(Build.ID);
+        ((TextView) findViewById(R.id.DEVICE)).setText(Build.DEVICE);
+        ((TextView) findViewById(R.id.USER)).setText(Build.USER);
+        ((TextView) findViewById(R.id.MANUFACTURER)).setText(Build.MANUFACTURER);
+    }
+
     public void bindAuth(View view2) {
-        LoginLevel1(view2);
+        getInfo(view2);
         findViewById(R.id.Login).setOnClickListener(view -> biometricPrompt.authenticate(promptInfo));
         Toast.makeText(getApplicationContext(), "绑定成功", Toast.LENGTH_SHORT).show();
+        LoginLevel1(view2);
     }
 
     public void sendMessage(View view) {
@@ -113,6 +132,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static String username = "efojug";
+
+    public void backgroundNotice(View view) {
+
+    }
 
     public void ChangeUsernameOK(View view) {
         username = ((EditText) findViewById(R.id.username)).getText().toString();

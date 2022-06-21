@@ -4,21 +4,25 @@ plugins {
 }
 
 android {
-    compileSdk 31
-
+    compileSdk 33
+    compileOptions.encoding="UTF-8"
     defaultConfig {
         applicationId "com.efojug.chatwithmepro"
         minSdk 29
-        targetSdk 30
-        versionCode 1
-        versionName '8.0.3-beta03'
+        targetSdk 31
+        versionCode 8
+        versionName '8.0.7-beta01'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
         }
+        externalNativeBuild {
+            cmake {
+                cppFlags ''
+            }
+        }
     }
-
     buildTypes {
         release {
             minifyEnabled false
@@ -49,6 +53,12 @@ android {
         includeInBundle true
     }
     ndkVersion '21.4.7075529'
+    externalNativeBuild {
+        cmake {
+            path file('src/main/cpp/CMakeLists.txt')
+            version '3.18.1'
+        }
+    }
 }
 
 dependencies {
