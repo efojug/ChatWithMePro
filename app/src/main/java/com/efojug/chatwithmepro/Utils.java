@@ -1,6 +1,5 @@
 package com.efojug.chatwithmepro;
 
-import static com.efojug.chatwithmepro.MainActivity.onReceive;
 import static com.efojug.chatwithmepro.MainActivity.username;
 
 import android.app.NotificationChannel;
@@ -8,7 +7,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.core.app.NotificationCompat;
@@ -23,7 +21,8 @@ public class Utils {
     //设置 channel_id
     public static final String CHANNEL_ID = "Chat";
     // Key for the string that's delivered in the action's intent.
-    private static final String KEY_TEXT_REPLY = "回复";
+    private static final String KEY_TEXT_REPLY = "key_text_reply";
+
     public static void sendNotification(Context context, String msg) {
         String replyLabel = "回复...";
         RemoteInput remoteInput = new RemoteInput.Builder(KEY_TEXT_REPLY)
@@ -69,8 +68,8 @@ public class Utils {
             num += 1;
             //发送通知( id唯⼀,⽤于更新通知时对应旧通知; 通过mBuilder.build()拿到notification对象 )
             mNotificationManager.notify(1, mBuilder.build());
+//            MainActivity.onReceive(MyApplication.context, intent);
             notificationUpdate = true;
-            onReceive(MyApplication.context, intent);
         } else {
             if (num > 999) {
                 mBuilder.setContentText("[999+条]" + username + "：" + msg);
@@ -82,6 +81,7 @@ public class Utils {
             mBuilder.setWhen(System.currentTimeMillis());
             num += 1;
             mNotificationManager.notify(1, mBuilder.build());
+//            MainActivity.onReceive(MyApplication.context, intent);
         }
     }
 
