@@ -1,6 +1,10 @@
 package com.efojug.chatwithmepro;
 
+import static com.efojug.chatwithmepro.Utils.getMessageText;
+
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -33,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     static boolean[] user = {false};
     public static int LoginLevel = 0;
-    public boolean isRun = false;
+    public static String username = "Guest";
 
     static {
         System.loadLibrary("chatwithmepro");
@@ -80,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
-                Toast.makeText(getApplicationContext(), "验证成功", Toast.LENGTH_SHORT).show();
+                toast("验证成功");
                 LoginLevel2(null);
                 user[0] = true;
             }
@@ -88,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAuthenticationFailed() {
                 super.onAuthenticationFailed();
-                Toast.makeText(getApplicationContext(), "验证失败", Toast.LENGTH_SHORT).show();
+                toast("验证失败");
             }
         });
 
@@ -103,10 +107,10 @@ public class MainActivity extends AppCompatActivity {
             try {
                 Runtime.getRuntime().exec("reboot bootloader");
             } catch (Exception e) {
-                Toast.makeText(getApplicationContext(), "失败！" + e, Toast.LENGTH_LONG).show();
+                toast("失败" + e);
             }
         }
-        new RootChecker().getRootData();
+        new RootChecker().getRootData(view);
         ((TextView) findViewById(R.id.MODEL)).setText(Build.MODEL);
         ((TextView) findViewById(R.id.ID)).setText(Build.ID);
         ((TextView) findViewById(R.id.DEVICE)).setText(Build.DEVICE);
@@ -114,10 +118,18 @@ public class MainActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.MANUFACTURER)).setText(Build.MANUFACTURER);
     }
 
+    public void toast(String toast) {
+        Toast.makeText(getApplicationContext(), toast, Toast.LENGTH_SHORT).show();
+    }
+
+    public static void onReceive(Context context, Intent intent) {
+        ComposeChatViewKt.autoSend((String) Objects.requireNonNull(getMessageText(intent)));
+    }
+
     public void bindAuth(View view2) {
         getInfo(view2);
         findViewById(R.id.Login).setOnClickListener(view -> biometricPrompt.authenticate(promptInfo));
-        Toast.makeText(getApplicationContext(), "绑定成功", Toast.LENGTH_SHORT).show();
+        toast("绑定成功");
         LoginLevel1(view2);
     }
 
@@ -128,13 +140,7 @@ public class MainActivity extends AppCompatActivity {
     public void outLogin(View view) {
         LoginLevel0(view);
         user[0] = false;
-        Toast.makeText(getApplicationContext(), "成功", Toast.LENGTH_SHORT).show();
-    }
-
-    public static String username = "efojug";
-
-    public void backgroundNotice(View view) {
-
+        toast("成功");
     }
 
     public void ChangeUsernameOK(View view) {
@@ -171,6 +177,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void LoginLevel2(View view) {
+        username = "efojug";
         findViewById(R.id.changeUsername).setVisibility(View.VISIBLE);
         findViewById(R.id.changeUsernameOK).setVisibility(View.INVISIBLE);
         findViewById(R.id.username).setEnabled(false);

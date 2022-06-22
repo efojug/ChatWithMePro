@@ -3,6 +3,7 @@ package com.efojug.chatwithmepro
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -20,6 +21,8 @@ import com.efojug.chatwithmepro.MainActivity.username
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+private var text by mutableStateOf("")
+
 @Composable
 fun ChatRoom(list: MutableList<ChatData>) {
     Column {
@@ -29,13 +32,9 @@ fun ChatRoom(list: MutableList<ChatData>) {
                 .weight(1f)
                 .padding(top = 20.dp)
         ) {
-            itemsIndexed(list) { index: Int, item: ChatData ->
+            items(list) { item ->
                 MsgItem(item)
             }
-        }
-
-        var text by remember {
-            mutableStateOf("")
         }
 
         var height by remember {
@@ -76,23 +75,28 @@ fun ChatRoom(list: MutableList<ChatData>) {
             Spacer(modifier = Modifier.padding(horizontal = 4.dp))
             Button(
                 onClick = {
-                    if (user[0]) ChatDataManager.add(
-                        ChatData(
-                            username,
-                            LocalDateTime.now()
-                                .format(DateTimeFormatter.ofPattern("MM-dd HH:mm:ss")).toString(),
-                            text
+                    if (text.isNotBlank()) {
+                        Utils.sendNotification(MyApplication.context, text)
+                        if (user[0]) ChatDataManager.add(
+                            ChatData(
+                                username,
+                                LocalDateTime.now()
+                                    .format(DateTimeFormatter.ofPattern("MM-dd HH:mm:ss"))
+                                    .toString(),
+                                text
+                            )
+                        ) else ChatDataManager.add(
+                            ChatData(
+                                "Guest",
+                                LocalDateTime.now()
+                                    .format(DateTimeFormatter.ofPattern("MM-dd HH:mm:ss"))
+                                    .toString(),
+                                text
+                            )
                         )
-                    ) else ChatDataManager.add(
-                        ChatData(
-                            "Guest",
-                            LocalDateTime.now()
-                                .format(DateTimeFormatter.ofPattern("MM-dd HH:mm:ss")).toString(),
-                            text
-                        )
-                    )
-                    text = ""
-                    height = 0
+                        text = ""
+                        height = 0
+                    }
                 },
                 shape = RoundedCornerShape(8.dp),
                 colors = ButtonDefaults.buttonColors(Color(0xFF06C361))
@@ -101,6 +105,16 @@ fun ChatRoom(list: MutableList<ChatData>) {
             }
         }
     }
+}
+
+fun autoSend(msg: String) {
+    ChatDataManager.add(
+        ChatData(
+            username,
+            LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM-dd HH:mm:ss")).toString(),
+            msg
+        )
+    )
 }
 
 @Composable
@@ -114,7 +128,10 @@ fun MsgItem(chatData: ChatData) {
         )
     }
     Surface {
-        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = if (chatData.userName == "efojug") Arrangement.End else Arrangement.Start) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = if (chatData.userName == "efojug") Arrangement.End else Arrangement.Start
+        ) {
             Icon(
                 imageVector = Icons.Default.AccountBox,
                 contentDescription = "",

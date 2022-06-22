@@ -74,12 +74,12 @@ object RootUtilities {
         return false
     }
 
-//    fun isBusyBoxInstalled() = checkBinaryBusyBoxInstalled("busybox")
+    fun isBusyBoxInstalled() = checkBinaryBusyBoxInstalled("busybox")
 
 
-    fun isBusyBoxInstalled(): Boolean {
-        return checkBinaryBusyBoxInstalled("busybox")
-    }
+//    fun isBusyBoxInstalled(): Boolean {
+//        return checkBinaryBusyBoxInstalled("busybox")
+//    }
 
 
     private fun checkBinaryBusyBoxInstalled(filename: String): Boolean {

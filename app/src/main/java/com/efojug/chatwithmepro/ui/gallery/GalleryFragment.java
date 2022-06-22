@@ -1,8 +1,6 @@
 package com.efojug.chatwithmepro.ui.gallery;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
