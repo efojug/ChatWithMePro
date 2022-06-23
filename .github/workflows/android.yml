@@ -24,7 +24,7 @@ jobs:
         run: |
           echo ${{ secrets.SIGN_KEY }} | base64 -d > key.jks
           git submodule update --init --recursive
-          ./gradlew :QTool:assembleRelease
+          ./gradlew :app:assembleRelease
         env:
           KEYSTORE_PATH: "../key.jks"
           KEYSTORE_PASSWORD: ${{ secrets.SIGN_PASS }}
