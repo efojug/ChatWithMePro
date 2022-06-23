@@ -35,5 +35,5 @@ jobs:
         uses: actions/upload-artifact@v2
         if: ${{ !github.event.pull_request }}
         with:
-          path: ${{ github.workspace }}/app/build/outputs/apk/debug
+          path: ${{ github.workspace }}/app/build/outputs/apk/debug/app-debug.apk
           name: ChatWithMe-v${{ github.run_number }}
