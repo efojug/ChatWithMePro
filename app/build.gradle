@@ -4,20 +4,6 @@ plugins {
 }
 
 android {
-    signingConfigs {
-        debug {
-            storeFile file('F:\\AndroidStudioProjects\\ChatWithMePro\\.github\\workflows\\app.jks')
-            storePassword 'li890890'
-            keyAlias 'key0'
-            keyPassword 'li890890'
-        }
-        release {
-            storeFile file('F:\\AndroidStudioProjects\\ChatWithMePro\\.github\\workflows\\app.jks')
-            storePassword 'li890890'
-            keyAlias 'key0'
-            keyPassword 'li890890'
-        }
-    }
     compileSdk 33
     compileOptions.encoding="UTF-8"
     defaultConfig {
