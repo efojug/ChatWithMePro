@@ -26,7 +26,7 @@ jobs:
           git submodule update --init --recursive
           ./gradlew :app:assembleRelease
         env:
-          KEYSTORE_PATH: "../key.jks"
+          KEYSTORE_PATH: "../android.keystore"
           KEYSTORE_PASSWORD: ${{ secrets.SIGN_PASS }}
           KEY_ALIAS: ${{ secrets.SIGN_ALIAS }}
           KEY_PASSWORD: ${{ secrets.ALIA_PASS }}
@@ -35,5 +35,5 @@ jobs:
         uses: actions/upload-artifact@v2
         if: ${{ !github.event.pull_request }}
         with:
-          path: ${{ github.workspace }}/app/build/outputs/apk/release
+          path: ${{ github.workspace }}/app/build/outputs/apk/debug
           name: ChatWithMe-v${{ github.run_number }}
