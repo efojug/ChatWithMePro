@@ -1,5 +1,6 @@
 package com.efojug.chatwithmepro;
 
+import static com.efojug.chatwithmepro.MainActivity.getMsg;
 import static com.efojug.chatwithmepro.MainActivity.username;
 
 import android.app.Notification;
@@ -68,11 +69,9 @@ public class Utils {
             if (num == 1) {
                 mBuilder.setContentText(username + "：" + msg);
             }
-            num += 1;
             //发送通知( id唯⼀,⽤于更新通知时对应旧通知; 通过mBuilder.build()拿到notification对象 )
             mNotificationManager.notify(notificationId, mBuilder.build());
 //            MainActivity.onReceive(MyApplication.context, intent);
-            notificationUpdate = true;
         } else {
             if (num > 999) {
                 mBuilder.setContentText("[999+条]" + username + "：" + msg);
@@ -82,22 +81,12 @@ public class Utils {
                 mBuilder.setContentText("[" + num + "条]" + username + "：" + msg);
             }
             mBuilder.setWhen(System.currentTimeMillis());
-            num += 1;
             mNotificationManager.notify(notificationId, mBuilder.build());
         }
-    }
-
-    public static void repliedNotification() {
-        // Build a new notification, which informs the user that the system
-        // handled their interaction with the previous notification.
-        Notification repliedNotification = new Notification.Builder(MyApplication.context, CHANNEL_ID)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentText(getMessageText(intent))
-                .build();
-
-        // Issue the new notification.
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(MyApplication.context);
-        notificationManager.notify(notificationId, repliedNotification);
+        notificationUpdate = true;
+        num += 1;
+        //getMsg(intent);
+        MainActivity.toast((String) getMessageText(intent));
     }
 
     public static CharSequence getMessageText(Intent intent) {
@@ -108,8 +97,3 @@ public class Utils {
         return null;
     }
 }
-
-/* NMSL
-
-
- */

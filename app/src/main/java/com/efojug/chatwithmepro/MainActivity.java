@@ -1,6 +1,7 @@
 package com.efojug.chatwithmepro;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -106,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
                 toast("失败" + e);
             }
         }
-
         ((TextView) findViewById(R.id.ROOT)).setText(new RootChecker().getRootData().substring(0, 1));
         ((TextView) findViewById(R.id.givenROOT)).setText(new RootChecker().getRootData().substring(1, 2));
         ((TextView) findViewById(R.id.BusyBox)).setText(new RootChecker().getRootData().substring(2, 5));
@@ -115,6 +115,10 @@ public class MainActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.DEVICE)).setText(Build.DEVICE);
         ((TextView) findViewById(R.id.USER)).setText(Build.USER);
         ((TextView) findViewById(R.id.MANUFACTURER)).setText(Build.MANUFACTURER);
+    }
+
+    public static void getMsg(Intent intent) {
+        toast((String) Utils.getMessageText(intent));
     }
 
     public static void toast(String toast) {

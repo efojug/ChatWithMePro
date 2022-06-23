@@ -15,32 +15,16 @@ class RootChecker : AppCompatActivity(), CoroutineScope by MainScope() {
 
 
     fun getRootData(): String {
-        //Coroutine
-//        launch(Dispatchers.Default) {
         try {
             rooted = RootUtilities.isRootAvailableOnDevice()
             rootGivenBool = RootUtilities.isRootGivenForDevice()
             busyBoxInstalledBool = RootUtilities.isBusyBoxInstalled()
-
-            //UI Thread
-//                withContext(Dispatchers.Main) {
-            if (rooted) {
-//                        Toast.makeText(MyApplication.context, "isRoot", Toast.LENGTH_SHORT).show()
-                isRooted = "是"
-            }
-
-            if (rootGivenBool)
-//                        Toast.makeText(MyApplication.context, "isGivenRoot", Toast.LENGTH_SHORT).show()
-                isGivenRoot = "是"
-
-            if (busyBoxInstalledBool)
-//                        Toast.makeText(MyApplication.context, "isInstallBusyBox", Toast.LENGTH_SHORT).show()
-                isInstallBusyBox = "已安装"
-//                }
+            if (rooted) isRooted = "是"
+            if (rootGivenBool) isGivenRoot = "是"
+            if (busyBoxInstalledBool) isInstallBusyBox = "已安装"
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }
-//        }
         return isRooted + isGivenRoot + isInstallBusyBox
     }
 }
