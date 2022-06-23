@@ -1,10 +1,6 @@
 package com.efojug.chatwithmepro;
 
-import static com.efojug.chatwithmepro.Utils.getMessageText;
-
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -110,7 +106,10 @@ public class MainActivity extends AppCompatActivity {
                 toast("失败" + e);
             }
         }
-        new RootChecker().getRootData(view);
+
+        ((TextView) findViewById(R.id.ROOT)).setText(new RootChecker().getRootData().substring(0, 1));
+        ((TextView) findViewById(R.id.givenROOT)).setText(new RootChecker().getRootData().substring(1, 2));
+        ((TextView) findViewById(R.id.BusyBox)).setText(new RootChecker().getRootData().substring(2, 5));
         ((TextView) findViewById(R.id.MODEL)).setText(Build.MODEL);
         ((TextView) findViewById(R.id.ID)).setText(Build.ID);
         ((TextView) findViewById(R.id.DEVICE)).setText(Build.DEVICE);
@@ -118,12 +117,8 @@ public class MainActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.MANUFACTURER)).setText(Build.MANUFACTURER);
     }
 
-    public void toast(String toast) {
-        Toast.makeText(getApplicationContext(), toast, Toast.LENGTH_SHORT).show();
-    }
-
-    public static void onReceive(Context context, Intent intent) {
-        ComposeChatViewKt.autoSend((String) Objects.requireNonNull(getMessageText(intent)));
+    public static void toast(String toast) {
+        Toast.makeText(MyApplication.context, toast, Toast.LENGTH_SHORT).show();
     }
 
     public void bindAuth(View view2) {

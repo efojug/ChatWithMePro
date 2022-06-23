@@ -2,6 +2,7 @@ package com.efojug.chatwithmepro;
 
 import static com.efojug.chatwithmepro.MainActivity.username;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -10,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.app.RemoteInput;
 
 public class Utils {
@@ -22,14 +24,15 @@ public class Utils {
     public static final String CHANNEL_ID = "Chat";
     // Key for the string that's delivered in the action's intent.
     private static final String KEY_TEXT_REPLY = "key_text_reply";
+    // Create an explicit intent for an Activity in app
+    static Intent intent = new Intent(MyApplication.context, MainActivity.class);
+    public static int notificationId = 1;
 
     public static void sendNotification(Context context, String msg) {
         String replyLabel = "回复...";
         RemoteInput remoteInput = new RemoteInput.Builder(KEY_TEXT_REPLY)
                 .setLabel(replyLabel)
                 .build();
-        // Create an explicit intent for an Activity in app
-        Intent intent = new Intent(MyApplication.context, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(MyApplication.context, 0, intent, 0);
         // Build a PendingIntent for the reply action to trigger.
@@ -67,7 +70,7 @@ public class Utils {
             }
             num += 1;
             //发送通知( id唯⼀,⽤于更新通知时对应旧通知; 通过mBuilder.build()拿到notification对象 )
-            mNotificationManager.notify(1, mBuilder.build());
+            mNotificationManager.notify(notificationId, mBuilder.build());
 //            MainActivity.onReceive(MyApplication.context, intent);
             notificationUpdate = true;
         } else {
@@ -80,9 +83,21 @@ public class Utils {
             }
             mBuilder.setWhen(System.currentTimeMillis());
             num += 1;
-            mNotificationManager.notify(1, mBuilder.build());
-//            MainActivity.onReceive(MyApplication.context, intent);
+            mNotificationManager.notify(notificationId, mBuilder.build());
         }
+    }
+
+    public static void repliedNotification() {
+        // Build a new notification, which informs the user that the system
+        // handled their interaction with the previous notification.
+        Notification repliedNotification = new Notification.Builder(MyApplication.context, CHANNEL_ID)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentText(getMessageText(intent))
+                .build();
+
+        // Issue the new notification.
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(MyApplication.context);
+        notificationManager.notify(notificationId, repliedNotification);
     }
 
     public static CharSequence getMessageText(Intent intent) {
@@ -93,3 +108,8 @@ public class Utils {
         return null;
     }
 }
+
+/* NMSL
+
+
+ */
