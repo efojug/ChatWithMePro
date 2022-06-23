@@ -37,15 +37,6 @@ jobs:
         with:
           path: 'app/build/outputs/apk/release/app-release.apk'
           name: ChatWithMe-v${{ github.run_number }}
-      - name: mkd
-        uses: fifsky/ssh-action@master
-        with:
-          command: |
-            mkdir ${{ secrets.DEPLOY_DEST }}v${{ github.run_number }}/
-          host: ${{ secrets.SERVER_IP }}
-          user: ${{ secrets.SERVER_USERNAME }}
-          port: 22
-          pass: ${{ secrets.SERVER_PASSWORD }}
       - name: Remote SSH Pusblish
         uses: nerd4ever/ssh-action@master
         with:
