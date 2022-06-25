@@ -9,19 +9,19 @@
 
     <EditText
         android:id="@+id/username"
-        android:layout_width="180dp"
+        android:layout_width="155dp"
         android:layout_height="48dp"
         android:autofillHints=""
         android:ems="10"
+        android:enabled="false"
         android:text="@string/username"
         android:textSize="20sp"
-        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.132"
+        app:layout_constraintHorizontal_bias="0.125"
         app:layout_constraintStart_toEndOf="@+id/headPortrait"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.020" />
+        app:layout_constraintVertical_bias="0.02" />
 
     <TextView
         android:id="@+id/autograph"
@@ -53,7 +53,7 @@
 
     <Button
         android:id="@+id/Login"
-        android:layout_width="135dp"
+        android:layout_width="125dp"
         android:layout_height="45dp"
         android:onClick="Login"
         android:text="登录"
@@ -67,7 +67,7 @@
 
     <Button
         android:id="@+id/BindAuth"
-        android:layout_width="135dp"
+        android:layout_width="125dp"
         android:layout_height="45dp"
         android:onClick="bindAuth"
         android:text="绑定设备信息"
@@ -94,7 +94,7 @@
 
     <Button
         android:id="@+id/outLogin"
-        android:layout_width="135dp"
+        android:layout_width="125dp"
         android:layout_height="45dp"
         android:onClick="outLogin"
         android:text="退出登录"

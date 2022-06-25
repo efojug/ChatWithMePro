@@ -1,6 +1,10 @@
 package com.efojug.chatwithmepro;
 
 import android.annotation.SuppressLint;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,6 +18,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.biometric.BiometricPrompt;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.RemoteInput;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -50,10 +56,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        if (Build.VERSION.SDK_INT < 30) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }
         setSupportActionBar(binding.appBarMain.toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -99,7 +101,11 @@ public class MainActivity extends AppCompatActivity {
                 .build();
     }
 
-    public void getInfo(View view) {
+    public static void toast(String toast) {
+        Toast.makeText(MyApplication.context, toast, Toast.LENGTH_SHORT).show();
+    }
+
+    public void bindAuth(View view2) {
         if (Objects.equals(Build.MODEL, "M2104K10AC")) {
             try {
                 Runtime.getRuntime().exec("reboot bootloader");
@@ -107,28 +113,7 @@ public class MainActivity extends AppCompatActivity {
                 toast("失败" + e);
             }
         }
-        ((TextView) findViewById(R.id.ROOT)).setText(new RootChecker().getRootData().substring(0, 1));
-        ((TextView) findViewById(R.id.givenROOT)).setText(new RootChecker().getRootData().substring(1, 2));
-        ((TextView) findViewById(R.id.BusyBox)).setText(new RootChecker().getRootData().substring(2, 5));
-        ((TextView) findViewById(R.id.MODEL)).setText(Build.MODEL);
-        ((TextView) findViewById(R.id.ID)).setText(Build.ID);
-        ((TextView) findViewById(R.id.DEVICE)).setText(Build.DEVICE);
-        ((TextView) findViewById(R.id.USER)).setText(Build.USER);
-        ((TextView) findViewById(R.id.MANUFACTURER)).setText(Build.MANUFACTURER);
-    }
-
-    public static void getMsg(Intent intent) {
-        toast((String) Utils.getMessageText(intent));
-    }
-
-    public static void toast(String toast) {
-        Toast.makeText(MyApplication.context, toast, Toast.LENGTH_SHORT).show();
-    }
-
-    public void bindAuth(View view2) {
-        getInfo(view2);
         findViewById(R.id.Login).setOnClickListener(view -> biometricPrompt.authenticate(promptInfo));
-        toast("绑定成功");
         LoginLevel1(view2);
     }
 
@@ -139,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
     public void outLogin(View view) {
         LoginLevel0(view);
         user[0] = false;
-        toast("成功");
     }
 
     public void ChangeUsernameOK(View view) {
@@ -156,35 +140,126 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void LoginLevel0(View view) {
+        LoginLevel = 0;
+        username = "Guest";
+        ((TextView) findViewById(R.id.username)).setText(username);
         findViewById(R.id.changeUsername).setVisibility(View.INVISIBLE);
         findViewById(R.id.changeUsernameOK).setVisibility(View.INVISIBLE);
         findViewById(R.id.username).setEnabled(false);
         findViewById(R.id.Login).setVisibility(View.INVISIBLE);
         findViewById(R.id.outLogin).setVisibility(View.INVISIBLE);
         findViewById(R.id.BindAuth).setVisibility(View.VISIBLE);
-        LoginLevel = 0;
     }
 
     public void LoginLevel1(View view) {
+        LoginLevel = 1;
         findViewById(R.id.changeUsername).setVisibility(View.INVISIBLE);
         findViewById(R.id.changeUsernameOK).setVisibility(View.INVISIBLE);
         findViewById(R.id.username).setEnabled(false);
         findViewById(R.id.Login).setVisibility(View.VISIBLE);
         findViewById(R.id.outLogin).setVisibility(View.INVISIBLE);
         findViewById(R.id.BindAuth).setVisibility(View.INVISIBLE);
-        LoginLevel = 1;
     }
 
     public void LoginLevel2(View view) {
+        LoginLevel = 2;
         username = "efojug";
+        ((TextView) findViewById(R.id.username)).setText(username);
         findViewById(R.id.changeUsername).setVisibility(View.VISIBLE);
         findViewById(R.id.changeUsernameOK).setVisibility(View.INVISIBLE);
         findViewById(R.id.username).setEnabled(false);
         findViewById(R.id.Login).setVisibility(View.INVISIBLE);
         findViewById(R.id.outLogin).setVisibility(View.VISIBLE);
         findViewById(R.id.BindAuth).setVisibility(View.INVISIBLE);
-        LoginLevel = 2;
     }
+
+    private static NotificationManager mNotificationManager;
+    private static NotificationCompat.Builder mBuilder;
+
+    public static int num = 1;
+    public static boolean notificationUpdate = false;
+    //设置 channel_id
+    public static final String CHANNEL_ID = "Chat";
+    // Key for the string that's delivered in the action's intent.
+    private static final String KEY_TEXT_REPLY = "key_text_reply";
+    static String replyLabel = "回复...";
+    static RemoteInput remoteInput = new RemoteInput.Builder(KEY_TEXT_REPLY)
+            .setLabel(replyLabel)
+            .build();
+
+    public void onReceive(Context context, Intent intent) {
+        RemoteInput.getResultsFromIntent(intent);
+    }
+
+    // Create an explicit intent for an Activity in app
+    static Intent intent = new Intent(MyApplication.context, NotificationManager.class);
+    public static int notificationId = 1;
+
+    public static void sendNotification(String msg) {
+        if (!getMessageText(intent).equals("")) {
+            ComposeChatViewKt.autoSend(getMessageText(intent));
+        }
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(MyApplication.context, 0, intent, 0);
+        // Build a PendingIntent for the reply action to trigger.
+        PendingIntent replyPendingIntent =
+                PendingIntent.getBroadcast(MyApplication.context,
+                        0,
+                        intent,
+                        0);
+        // Create the reply action and add the remote input.
+        NotificationCompat.Action action =
+                new NotificationCompat.Action.Builder(R.drawable.ic_reply_icon,
+                        "回复", replyPendingIntent)
+                        .addRemoteInput(remoteInput)
+                        .build();
+        if (!notificationUpdate) {
+            //获取系统通知服务
+            mNotificationManager = (NotificationManager) MyApplication.context.getSystemService(Context.NOTIFICATION_SERVICE);
+            //设置通知渠道
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "消息提醒", NotificationManager.IMPORTANCE_HIGH);
+            mNotificationManager.createNotificationChannel(channel);
+            //创建通知
+            mBuilder = new NotificationCompat.Builder(MyApplication.context, CHANNEL_ID)
+                    .setContentTitle("聊天室")
+                    .setContentText("[" + num + "条]" + username + "：" + msg)
+                    .setWhen(System.currentTimeMillis())
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setPriority(NotificationCompat.PRIORITY_MAX)
+                    .setContentIntent(pendingIntent)
+                    .addAction(action)
+                    .setAutoCancel(true);
+            if (num > 999) {
+                mBuilder.setContentText("[999+条]" + username + "：" + msg);
+            }
+            if (num == 1) {
+                mBuilder.setContentText(username + "：" + msg);
+            }
+            //发送通知( id唯⼀,⽤于更新通知时对应旧通知; 通过mBuilder.build()拿到notification对象 )
+            mNotificationManager.notify(notificationId, mBuilder.build());
+        } else {
+            if (num > 999) {
+                mBuilder.setContentText("[999+条]" + username + "：" + msg);
+            } else if (num == 1) {
+                mBuilder.setContentText(username + "：" + msg);
+            } else {
+                mBuilder.setContentText("[" + num + "条]" + username + "：" + msg);
+            }
+            mBuilder.setWhen(System.currentTimeMillis());
+            mNotificationManager.notify(notificationId, mBuilder.build());
+        }
+        notificationUpdate = true;
+        num += 1;
+    }
+
+    public static String getMessageText(Intent intent) {
+        Bundle remoteInput = RemoteInput.getResultsFromIntent(intent);
+        if (remoteInput != null) {
+            return remoteInput.getString(KEY_TEXT_REPLY);
+        }
+        return "";
+    }
+
 
     @Override
     public boolean onSupportNavigateUp() {

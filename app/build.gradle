@@ -8,10 +8,10 @@ android {
     compileOptions.encoding="UTF-8"
     defaultConfig {
         applicationId "com.efojug.chatwithmepro"
-        minSdk 29
-        targetSdk 31
-        versionCode 8
-        versionName '8.0.7-beta01'
+        minSdk 30
+        targetSdk 33
+        versionCode 242
+        versionName '8.2.0-stable06'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

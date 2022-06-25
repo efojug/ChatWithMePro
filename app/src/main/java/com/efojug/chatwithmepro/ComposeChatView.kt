@@ -76,7 +76,7 @@ fun ChatRoom(list: MutableList<ChatData>) {
             Button(
                 onClick = {
                     if (text.isNotBlank()) {
-                        Utils.sendNotification(MyApplication.context, text)
+                        MainActivity.sendNotification(text)
                         if (user[0]) ChatDataManager.add(
                             ChatData(
                                 username,
