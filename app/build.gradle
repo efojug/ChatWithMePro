@@ -6,12 +6,13 @@ plugins {
 android {
     compileSdk 33
     compileOptions.encoding="UTF-8"
+    def currentVersionCode = getVersionCode()
     defaultConfig {
         applicationId "com.efojug.chatwithmepro"
         minSdk 30
         targetSdk 33
-        versionCode 242
-        versionName '8.2.0-stable06'
+        versionCode currentVersionCode
+        versionName '8.2.2-stable14'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -58,6 +59,25 @@ android {
             path file('src/main/cpp/CMakeLists.txt')
             version '3.18.1'
         }
+    }
+}
+
+def getVersionCode() {
+    def versionCodeFile = file('version_code.properties')
+    if (versionCodeFile.canRead()) {
+        Properties properties = new Properties()
+        properties.load(new FileInputStream(versionCodeFile))
+        def versionCode = properties['VERSION_CODE'].toInteger()//读取version_code.properties文件存放的版本号。
+        def runTasks = gradle.startParameter.taskNames
+        def task = ':app:assembleDebug'
+        if (task in runTasks) {
+            properties['VERSION_CODE'] = (++versionCode).toString()
+            properties.store(versionCodeFile.newWriter(), null)
+        }
+
+        return versionCode
+    } else {
+        throw new GradleException("无法读取version_code.properties文件！")
     }
 }
 
