@@ -1,6 +1,7 @@
 package com.efojug.chatwithmepro;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -22,6 +23,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.app.RemoteInput;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -79,8 +81,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         Executor executor = ContextCompat.getMainExecutor(this);
-
-
         biometricPrompt = new BiometricPrompt(MainActivity.this,
                 executor, new BiometricPrompt.AuthenticationCallback() {
             @Override
@@ -91,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
-                toast("验证成功");
                 LoginLevel2(null);
                 user[0] = true;
             }
@@ -135,10 +134,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void ChangeUsernameOK(View view) {
-        username = ((EditText) findViewById(R.id.username)).getText().toString();
-        findViewById(R.id.changeUsername).setVisibility(View.VISIBLE);
-        findViewById(R.id.changeUsernameOK).setVisibility(View.INVISIBLE);
-        findViewById(R.id.username).setEnabled(false);
+        if (((EditText) findViewById(R.id.username)).getText().toString().isBlank()) {
+            toast("用户名不能为空");
+        } else {
+            username = ((EditText) findViewById(R.id.username)).getText().toString();
+            findViewById(R.id.changeUsername).setVisibility(View.VISIBLE);
+            findViewById(R.id.changeUsernameOK).setVisibility(View.INVISIBLE);
+            findViewById(R.id.username).setEnabled(false);
+        }
     }
 
     public void ChangeUsername(View view) {
@@ -196,23 +199,14 @@ public class MainActivity extends AppCompatActivity {
             .build();
 
     // Create an explicit intent for an Activity in app
-    static Intent intent = new Intent(MyApplication.context, NotificationManager.class);
+    static Intent intent = new Intent(MyApplication.context, MainActivity.class);
     public static int notificationId = 1;
-
-    static class MyBoardCast extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            toast("ok");
-        }
-    }
 
     public static void sendNotification(String msg) {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(MyApplication.context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(MyApplication.context, 0, intent, 0);
         // Build a PendingIntent for the reply action to trigger.
         PendingIntent replyPendingIntent = PendingIntent.getBroadcast(MyApplication.context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        // Create the reply action and add the remote input.
-        NotificationCompat.Action action = new NotificationCompat.Action.Builder(R.drawable.ic_reply_icon, "回复", replyPendingIntent).addRemoteInput(remoteInput).build();
         if (!notificationUpdate) {
             //获取系统通知服务
             mNotificationManager = (NotificationManager) MyApplication.context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -227,7 +221,6 @@ public class MainActivity extends AppCompatActivity {
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .setPriority(NotificationCompat.PRIORITY_MAX)
                     .setContentIntent(pendingIntent)
-                    .addAction(action)
                     .setAutoCancel(true);
             if (num > 999) {
                 mBuilder.setContentText("[999+条]" + username + "：" + msg);
@@ -245,19 +238,10 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 mBuilder.setContentText("[" + num + "条]" + username + "：" + msg);
             }
-            mBuilder.setWhen(System.currentTimeMillis());
             mNotificationManager.notify(notificationId, mBuilder.build());
         }
         notificationUpdate = true;
         num += 1;
-    }
-
-    private static CharSequence getMessageText(Intent intent) {
-        Bundle remoteInput = RemoteInput.getResultsFromIntent(intent);
-        if (remoteInput != null) {
-            return remoteInput.getCharSequence(KEY_TEXT_REPLY);
-        }
-        return null;
     }
 
 
