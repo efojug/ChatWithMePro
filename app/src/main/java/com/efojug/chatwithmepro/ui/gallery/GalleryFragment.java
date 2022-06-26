@@ -8,11 +8,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.transition.TransitionInflater;
 
+import com.efojug.chatwithmepro.MainActivity;
 import com.efojug.chatwithmepro.R;
 import com.efojug.chatwithmepro.RootChecker;
 import com.efojug.chatwithmepro.databinding.FragmentGalleryBinding;
@@ -35,7 +38,11 @@ public class GalleryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentGalleryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        postponeEnterTransition();
         super.onCreate(savedInstanceState); // Always call the superclass first
+        TransitionInflater iinflater = TransitionInflater.from(requireContext());
+        setEnterTransition(iinflater.inflateTransition(R.transition.slide_right));
+        setExitTransition(iinflater.inflateTransition(R.transition.fade));
         // Check whether we're recreating a previously destroyed instance
         if (!isChecked) {
             try {
@@ -70,6 +77,7 @@ public class GalleryFragment extends Fragment {
             ((TextView) root.findViewById(R.id.BusyBox)).setText(Busybox);
         }
         if (LoginLevel == 0) {
+            ((EditText) root.findViewById(R.id.username)).setText(username);
             root.findViewById(R.id.changeUsername).setVisibility(View.INVISIBLE);
             root.findViewById(R.id.changeUsernameOK).setVisibility(View.INVISIBLE);
             root.findViewById(R.id.username).setEnabled(false);
@@ -91,7 +99,7 @@ public class GalleryFragment extends Fragment {
             root.findViewById(R.id.outLogin).setVisibility(View.VISIBLE);
             root.findViewById(R.id.BindAuth).setVisibility(View.INVISIBLE);
         }
-
+        startPostponedEnterTransition();
         return root;
     }
 

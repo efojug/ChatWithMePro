@@ -140,7 +140,7 @@ fun MsgItem(chatData: ChatData) {
                     .align(Alignment.Top)
             )
             Column {
-                Text(text = "${chatData.userName} :", fontSize = 12.sp, color = Color.LightGray)
+                Text(text = chatData.userName, fontSize = 12.sp, color = Color.LightGray)
                 Surface(
                     modifier = Modifier.padding(
                         start = 4.dp,
@@ -169,8 +169,7 @@ fun MsgItem(chatData: ChatData) {
 @Composable
 fun MsgItemPreView() {
     val list = listOf(
-        ChatData("xiaomi", "00-00 00:00:00", "MIUI"),
-        ChatData("HUAWEI", "00-00 00:00:00", "HarmoryOS"),
+        ChatData("Xiaomi", "00-00 00:00:00", "MIUI"),
         ChatData("OPPO", "00-00 00:00:00", "ColorOS"),
         ChatData("MEIZU", "00-00 00:00:00", "Flyme"),
         ChatData("vivo", "00-00 00:00:00", "OriginOS")

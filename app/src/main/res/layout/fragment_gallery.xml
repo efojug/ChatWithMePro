@@ -6,6 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".ui.gallery.GalleryFragment">
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/gallery"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <EditText
         android:id="@+id/username"
@@ -14,6 +18,7 @@
         android:autofillHints=""
         android:ems="10"
         android:enabled="false"
+        android:maxLength="10"
         android:text="@string/username"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -28,7 +33,6 @@
         android:layout_width="180dp"
         android:layout_height="24dp"
         android:autofillHints=""
-        android:ems="10"
         android:text="@string/autograph"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"

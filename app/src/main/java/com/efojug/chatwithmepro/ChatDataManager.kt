@@ -7,8 +7,7 @@ object ChatDataManager {
     init {
         list.addAll(
             listOf(
-                ChatData("xiaomi", "00-00 00:00:00", "MIUI"),
-                ChatData("HUAWEI", "00-00 00:00:00", "HarmoryOS"),
+                ChatData("Xiaomi", "00-00 00:00:00", "MIUI"),
                 ChatData("OPPO", "00-00 00:00:00", "ColorOS"),
                 ChatData("MEIZU", "00-00 00:00:00", "Flyme"),
                 ChatData("vivo", "00-00 00:00:00", "OriginOS")
