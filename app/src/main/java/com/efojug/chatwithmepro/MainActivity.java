@@ -1,19 +1,19 @@
 package com.efojug.chatwithmepro;
 
 import android.annotation.SuppressLint;
-import android.app.FragmentTransaction;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,15 +25,12 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.RemoteInput;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.transition.Slide;
 
 import com.efojug.chatwithmepro.databinding.ActivityMainBinding;
-import com.efojug.chatwithmepro.ui.gallery.GalleryFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;
@@ -82,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         Executor executor = ContextCompat.getMainExecutor(this);
-
 
 
         biometricPrompt = new BiometricPrompt(MainActivity.this,
@@ -199,32 +195,24 @@ public class MainActivity extends AppCompatActivity {
             .setLabel(replyLabel)
             .build();
 
-    public void onReceive(Context context, Intent intent) {
-        RemoteInput.getResultsFromIntent(intent);
-    }
-
     // Create an explicit intent for an Activity in app
     static Intent intent = new Intent(MyApplication.context, NotificationManager.class);
     public static int notificationId = 1;
 
-    public static void sendNotification(String msg) {
-        if (!getMessageText(intent).equals("")) {
-            ComposeChatViewKt.autoSend(getMessageText(intent));
+    static class MyBoardCast extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            toast("ok");
         }
+    }
+
+    public static void sendNotification(String msg) {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(MyApplication.context, 0, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(MyApplication.context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         // Build a PendingIntent for the reply action to trigger.
-        PendingIntent replyPendingIntent =
-                PendingIntent.getBroadcast(MyApplication.context,
-                        0,
-                        intent,
-                        0);
+        PendingIntent replyPendingIntent = PendingIntent.getBroadcast(MyApplication.context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         // Create the reply action and add the remote input.
-        NotificationCompat.Action action =
-                new NotificationCompat.Action.Builder(R.drawable.ic_reply_icon,
-                        "回复", replyPendingIntent)
-                        .addRemoteInput(remoteInput)
-                        .build();
+        NotificationCompat.Action action = new NotificationCompat.Action.Builder(R.drawable.ic_reply_icon, "回复", replyPendingIntent).addRemoteInput(remoteInput).build();
         if (!notificationUpdate) {
             //获取系统通知服务
             mNotificationManager = (NotificationManager) MyApplication.context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -264,12 +252,12 @@ public class MainActivity extends AppCompatActivity {
         num += 1;
     }
 
-    public static String getMessageText(Intent intent) {
+    private static CharSequence getMessageText(Intent intent) {
         Bundle remoteInput = RemoteInput.getResultsFromIntent(intent);
         if (remoteInput != null) {
-            return remoteInput.getString(KEY_TEXT_REPLY);
+            return remoteInput.getCharSequence(KEY_TEXT_REPLY);
         }
-        return "";
+        return null;
     }
 
 
