@@ -55,9 +55,10 @@ public class MainActivity extends AppCompatActivity {
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 //      注意要清除 FLAG_TRANSLUCENT_STATUS flag
-        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimary));
+//        getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimary));
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setSupportActionBar(binding.appBarMain.toolbar);
         ActionBar actionBar = getSupportActionBar();

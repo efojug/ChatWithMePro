@@ -12,9 +12,9 @@
     <style name="Theme.ChatWithMePro.NoActionBar">
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentStatus">true</item>
         <item name="android:clipToPadding">true</item>
-        <item name="android:fitsSystemWindows">false</item>
+<!--        <item name="android:fitsSystemWindows">true</item>-->
     </style>
 
     <style name="Theme.ChatWithMePro.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
