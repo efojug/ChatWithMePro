@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 executor, new BiometricPrompt.AuthenticationCallback() {
             @Override
             public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
+                toast("请先设置屏幕密码和指纹");
                 super.onAuthenticationError(errorCode, errString);
             }
 
@@ -102,6 +104,10 @@ public class MainActivity extends AppCompatActivity {
                 .setTitle("验证您的身份")
                 .setNegativeButtonText("取消")
                 .build();
+    }
+
+    public static void Vibrate(int time) {
+        ((Vibrator) MyApplication.context.getSystemService(Context.VIBRATOR_SERVICE)).vibrate(time);
     }
 
     public static void toast(String toast) {

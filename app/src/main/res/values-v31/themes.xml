@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.ChatWithMePro.NoActionBar">
+        <item name="android:windowSplashScreenBackground">@color/teal_200</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">@color/teal_200</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/news_avd_v02</item>
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:clipToPadding">true</item>
+        <!--        <item name="android:fitsSystemWindows">true</item>-->
+    </style>
+</resources>

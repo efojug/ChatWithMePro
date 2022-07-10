@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.efojug.chatwithmepro.MainActivity;
 import com.efojug.chatwithmepro.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment {
@@ -15,7 +16,7 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+        MainActivity.Vibrate(2);
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }

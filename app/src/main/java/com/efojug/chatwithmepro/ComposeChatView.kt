@@ -4,7 +4,6 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -54,13 +53,13 @@ fun ChatRoom(list: MutableList<ChatData>) {
                 value = text,
                 onValueChange = {
                     text = it
-                    if (it.length > b && height <= 40) {
-                        b += 18
-                        height += 18
-                    } else if (it.length < 18) {
-                        b = 16
-                        height = 0
-                    }
+//                    if (it.length > b && height <= 40) {
+//                        b += 18
+//                        height += 18
+//                    } else if (it.length < 18) {
+//                        b = 16
+//                        height = 0
+//                    }
                 },
                 colors = TextFieldDefaults.textFieldColors(
                     focusedIndicatorColor = Color(0xFF90EE90),
@@ -70,13 +69,15 @@ fun ChatRoom(list: MutableList<ChatData>) {
                 ), modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
-                    .height(heightDp)
+                    .heightIn(max = 68.dp)
             )
             Spacer(modifier = Modifier.padding(horizontal = 4.dp))
             Button(
+                enabled = text.isNotBlank(),
                 onClick = {
                     if (text.isNotBlank()) {
                         MainActivity.sendNotification(text)
+                        MainActivity.Vibrate(2)
                         if (user[0]) ChatDataManager.add(
                             ChatData(
                                 username,
@@ -98,6 +99,8 @@ fun ChatRoom(list: MutableList<ChatData>) {
                         height = 0
                     }
                 },
+                elevation = ButtonDefaults.elevation(0.dp),
+//                enabled = false,
                 shape = RoundedCornerShape(8.dp),
                 colors = ButtonDefaults.buttonColors(Color(0xFF06C361))
             ) {

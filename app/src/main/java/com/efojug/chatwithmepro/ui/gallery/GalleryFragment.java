@@ -34,8 +34,8 @@ public class GalleryFragment extends Fragment {
     public static String Manufacturer = "";
     public static Boolean isChecked = false;
 
-
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        MainActivity.Vibrate(2);
         binding = FragmentGalleryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         postponeEnterTransition();
