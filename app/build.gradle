@@ -12,7 +12,7 @@ android {
         minSdk 30
         targetSdk 30
         versionCode currentVersionCode
-        versionName '8.2.2-stable15'
+        versionName '8.2.2-stable16'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
