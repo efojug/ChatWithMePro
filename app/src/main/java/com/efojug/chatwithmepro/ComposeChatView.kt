@@ -24,6 +24,7 @@ private var text by mutableStateOf("")
 
 @Composable
 fun ChatRoom(list: MutableList<ChatData>) {
+    MainActivity.Vibrate(2)
     Column {
         LazyColumn(
             modifier = Modifier
