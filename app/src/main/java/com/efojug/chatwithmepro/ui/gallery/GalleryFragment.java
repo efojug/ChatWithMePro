@@ -48,37 +48,28 @@ public class GalleryFragment extends Fragment {
     private BiometricPrompt.PromptInfo promptInfo;
 
 
-    public void writeFileString(File file, String str){
-        if(file.canWrite()){
+    public void writeFileString(String str){
+        if(new File("/data/com.efojug.chatwithmepro/files/config").canWrite()){
             try {
-                FileOutputStream fileOutputStream = new FileOutputStream(file);
+                FileOutputStream fileOutputStream = new FileOutputStream("/data/com.efojug.chatwithmepro/files/config");
                 fileOutputStream.write(str.getBytes());
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }else {
-            toast("没给权限保存你马配置文件");
-        }
-    }
-    File config = new File("/data/com.efojug.chatwithmepro/files/config");
-
-    {
-        if(config.exists()){
-            toast("配置文件已经存在");
-        } else {
-            toast("配置文件不存在");
+            toast("未获得文件读写权限");
         }
     }
 
     @Override
     public void onPause() {
-        writeFileString(config, username);
+        writeFileString(username);
         super.onPause();
     }
 
     @Override
     public void onStop() {
-        writeFileString(new File("/data/com.efojug.chatwithmepro/files/config"), username);
+        writeFileString(username);
         super.onStop();
     }
 
@@ -190,6 +181,7 @@ public class GalleryFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
+        writeFileString(username);
         super.onDestroyView();
         binding = null;
 
