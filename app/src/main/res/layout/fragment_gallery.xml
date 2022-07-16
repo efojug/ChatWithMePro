@@ -58,30 +58,17 @@
 
     <Button
         android:id="@+id/Login"
-        android:layout_width="125dp"
+        android:layout_width="100dp"
         android:layout_height="45dp"
         android:onClick="Login"
         android:text="登录"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.057"
+        app:layout_constraintHorizontal_bias="0.050"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.130" />
-
-    <Button
-        android:id="@+id/BindAuth"
-        android:layout_width="125dp"
-        android:layout_height="45dp"
-        android:onClick="bindAuth"
-        android:text="绑定设备信息"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.058"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.130" />
+        app:layout_constraintVertical_bias="0.135" />
 
     <Button
         android:id="@+id/changeUsername"
@@ -99,17 +86,17 @@
 
     <Button
         android:id="@+id/outLogin"
-        android:layout_width="125dp"
+        android:layout_width="100dp"
         android:layout_height="45dp"
         android:onClick="outLogin"
         android:text="退出登录"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.055"
+        app:layout_constraintHorizontal_bias="0.050"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.130" />
+        app:layout_constraintVertical_bias="0.135" />
 
     <Button
         android:id="@+id/changeUsernameOK"

@@ -1,6 +1,8 @@
 package com.efojug.chatwithmepro.ui.gallery;
 
-import static com.efojug.chatwithmepro.MainActivity.LoginLevel;
+import static com.efojug.chatwithmepro.MainActivity.Login;
+import static com.efojug.chatwithmepro.MainActivity.toast;
+import static com.efojug.chatwithmepro.MainActivity.user;
 import static com.efojug.chatwithmepro.MainActivity.username;
 
 import android.os.Build;
@@ -12,13 +14,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.biometric.BiometricPrompt;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.transition.TransitionInflater;
 
 import com.efojug.chatwithmepro.MainActivity;
+import com.efojug.chatwithmepro.MyApplication;
 import com.efojug.chatwithmepro.R;
 import com.efojug.chatwithmepro.RootChecker;
 import com.efojug.chatwithmepro.databinding.FragmentGalleryBinding;
+
+import java.util.concurrent.Executor;
 
 public class GalleryFragment extends Fragment {
 
@@ -33,6 +40,8 @@ public class GalleryFragment extends Fragment {
     public static String User = "";
     public static String Manufacturer = "";
     public static Boolean isChecked = false;
+    private BiometricPrompt biometricPrompt;
+    private BiometricPrompt.PromptInfo promptInfo;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         MainActivity.Vibrate(2);
@@ -44,6 +53,46 @@ public class GalleryFragment extends Fragment {
         setEnterTransition(iinflater.inflateTransition(R.transition.slide_right));
         setExitTransition(iinflater.inflateTransition(R.transition.fade));
         // Check whether we're recreating a previously destroyed instance
+        root.findViewById(R.id.Login).setOnClickListener(view -> biometricPrompt.authenticate(promptInfo));
+        try {
+            Executor executor = ContextCompat.getMainExecutor(MyApplication.context);
+            biometricPrompt = new BiometricPrompt(getActivity(),
+                    executor, new BiometricPrompt.AuthenticationCallback() {
+                @Override
+                public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
+                    toast("请先设置屏幕密码和指纹");
+                    super.onAuthenticationError(errorCode, errString);
+                }
+
+                @Override
+                public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
+                    super.onAuthenticationSucceeded(result);
+                    username = "efojug";
+                    ((TextView) root.findViewById(R.id.username)).setText(username);
+                    root.findViewById(R.id.changeUsername).setVisibility(View.VISIBLE);
+                    root.findViewById(R.id.changeUsernameOK).setVisibility(View.INVISIBLE);
+                    root.findViewById(R.id.username).setEnabled(false);
+                    root.findViewById(R.id.Login).setVisibility(View.INVISIBLE);
+                    root.findViewById(R.id.outLogin).setVisibility(View.VISIBLE);
+                    Login = true;
+                    user[0] = true;
+                }
+
+                @Override
+                public void onAuthenticationFailed() {
+                    super.onAuthenticationFailed();
+                    toast("验证失败");
+                }
+            });
+
+            promptInfo = new BiometricPrompt.PromptInfo.Builder()
+                    .setTitle("验证您的身份")
+                    .setNegativeButtonText("取消")
+                    .build();
+        } catch (Exception e) {
+            toast("验证失败："+e.getMessage());
+            e.printStackTrace();
+        }
         if (!isChecked) {
             try {
                 ((TextView) root.findViewById(R.id.MODEL)).setText(Build.MODEL);
@@ -76,28 +125,19 @@ public class GalleryFragment extends Fragment {
             ((TextView) root.findViewById(R.id.givenROOT)).setText(givenRooted);
             ((TextView) root.findViewById(R.id.BusyBox)).setText(Busybox);
         }
-        if (LoginLevel == 0) {
+        if (Login == false) {
             ((EditText) root.findViewById(R.id.username)).setText(username);
-            root.findViewById(R.id.changeUsername).setVisibility(View.INVISIBLE);
-            root.findViewById(R.id.changeUsernameOK).setVisibility(View.INVISIBLE);
-            root.findViewById(R.id.username).setEnabled(false);
-            root.findViewById(R.id.Login).setVisibility(View.INVISIBLE);
-            root.findViewById(R.id.outLogin).setVisibility(View.INVISIBLE);
-            root.findViewById(R.id.BindAuth).setVisibility(View.VISIBLE);
-        } else if (LoginLevel == 1) {
             root.findViewById(R.id.changeUsername).setVisibility(View.INVISIBLE);
             root.findViewById(R.id.changeUsernameOK).setVisibility(View.INVISIBLE);
             root.findViewById(R.id.username).setEnabled(false);
             root.findViewById(R.id.Login).setVisibility(View.VISIBLE);
             root.findViewById(R.id.outLogin).setVisibility(View.INVISIBLE);
-            root.findViewById(R.id.BindAuth).setVisibility(View.INVISIBLE);
-        } else if (LoginLevel == 2) {
+        } else {
             root.findViewById(R.id.changeUsername).setVisibility(View.VISIBLE);
             root.findViewById(R.id.changeUsernameOK).setVisibility(View.INVISIBLE);
             root.findViewById(R.id.username).setEnabled(false);
             root.findViewById(R.id.Login).setVisibility(View.INVISIBLE);
             root.findViewById(R.id.outLogin).setVisibility(View.VISIBLE);
-            root.findViewById(R.id.BindAuth).setVisibility(View.INVISIBLE);
         }
         startPostponedEnterTransition();
         return root;

@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
     private BiometricPrompt biometricPrompt;
     private BiometricPrompt.PromptInfo promptInfo;
     private AppBarConfiguration mAppBarConfiguration;
-    static boolean[] user = {false};
-    public static int LoginLevel = 0;
+    public static boolean[] user = {false};
+    public static boolean Login = false;
     public static String username = "Guest";
 
     static {
@@ -77,33 +77,6 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-        Executor executor = ContextCompat.getMainExecutor(this);
-        biometricPrompt = new BiometricPrompt(MainActivity.this,
-                executor, new BiometricPrompt.AuthenticationCallback() {
-            @Override
-            public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
-                toast("请先设置屏幕密码和指纹");
-                super.onAuthenticationError(errorCode, errString);
-            }
-
-            @Override
-            public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
-                super.onAuthenticationSucceeded(result);
-                LoginLevel2(null);
-                user[0] = true;
-            }
-
-            @Override
-            public void onAuthenticationFailed() {
-                super.onAuthenticationFailed();
-                toast("验证失败");
-            }
-        });
-
-        promptInfo = new BiometricPrompt.PromptInfo.Builder()
-                .setTitle("验证您的身份")
-                .setNegativeButtonText("取消")
-                .build();
     }
 
     public static void Vibrate(int time) {
@@ -114,24 +87,19 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(MyApplication.context, toast, Toast.LENGTH_SHORT).show();
     }
 
-    public void bindAuth(View view2) {
-        if (Objects.equals(Build.MODEL, "M2104K10AC")) {
-            try {
-                Runtime.getRuntime().exec("reboot bootloader");
-            } catch (Exception e) {
-                toast("失败" + e);
-            }
-        }
-        findViewById(R.id.Login).setOnClickListener(view -> biometricPrompt.authenticate(promptInfo));
-        LoginLevel1(view2);
-    }
-
     public void sendMessage(View view) {
         EditText editText = findViewById(R.id.writeMessage);
     }
 
     public void outLogin(View view) {
-        LoginLevel0(view);
+        Login = false;
+        username = "Guest";
+        ((TextView) findViewById(R.id.username)).setText(username);
+        findViewById(R.id.changeUsername).setVisibility(View.INVISIBLE);
+        findViewById(R.id.changeUsernameOK).setVisibility(View.INVISIBLE);
+        findViewById(R.id.username).setEnabled(false);
+        findViewById(R.id.Login).setVisibility(View.VISIBLE);
+        findViewById(R.id.outLogin).setVisibility(View.INVISIBLE);
         user[0] = false;
     }
 
@@ -150,40 +118,6 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.changeUsername).setVisibility(View.INVISIBLE);
         findViewById(R.id.username).setEnabled(true);
         findViewById(R.id.changeUsernameOK).setVisibility(View.VISIBLE);
-    }
-
-    public void LoginLevel0(View view) {
-        LoginLevel = 0;
-        username = "Guest";
-        ((TextView) findViewById(R.id.username)).setText(username);
-        findViewById(R.id.changeUsername).setVisibility(View.INVISIBLE);
-        findViewById(R.id.changeUsernameOK).setVisibility(View.INVISIBLE);
-        findViewById(R.id.username).setEnabled(false);
-        findViewById(R.id.Login).setVisibility(View.INVISIBLE);
-        findViewById(R.id.outLogin).setVisibility(View.INVISIBLE);
-        findViewById(R.id.BindAuth).setVisibility(View.VISIBLE);
-    }
-
-    public void LoginLevel1(View view) {
-        LoginLevel = 1;
-        findViewById(R.id.changeUsername).setVisibility(View.INVISIBLE);
-        findViewById(R.id.changeUsernameOK).setVisibility(View.INVISIBLE);
-        findViewById(R.id.username).setEnabled(false);
-        findViewById(R.id.Login).setVisibility(View.VISIBLE);
-        findViewById(R.id.outLogin).setVisibility(View.INVISIBLE);
-        findViewById(R.id.BindAuth).setVisibility(View.INVISIBLE);
-    }
-
-    public void LoginLevel2(View view) {
-        LoginLevel = 2;
-        username = "efojug";
-        ((TextView) findViewById(R.id.username)).setText(username);
-        findViewById(R.id.changeUsername).setVisibility(View.VISIBLE);
-        findViewById(R.id.changeUsernameOK).setVisibility(View.INVISIBLE);
-        findViewById(R.id.username).setEnabled(false);
-        findViewById(R.id.Login).setVisibility(View.INVISIBLE);
-        findViewById(R.id.outLogin).setVisibility(View.VISIBLE);
-        findViewById(R.id.BindAuth).setVisibility(View.INVISIBLE);
     }
 
     private static NotificationManager mNotificationManager;
