@@ -15,13 +15,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.RemoteInput;
-import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -31,8 +29,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.efojug.chatwithmepro.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.Objects;
-import java.util.concurrent.Executor;
+import com.efojug.chatwithmepro.network.NetworkClient;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("ObsoleteSdkInt")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        NetworkClient.INSTANCE.getSocket();
+
         ChatDataManager.INSTANCE.setUserName(getString(R.string.username));
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         super.onCreate(savedInstanceState);

@@ -5,6 +5,7 @@ import static com.efojug.chatwithmepro.MainActivity.toast;
 import static com.efojug.chatwithmepro.MainActivity.user;
 import static com.efojug.chatwithmepro.MainActivity.username;
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,6 +26,9 @@ import com.efojug.chatwithmepro.R;
 import com.efojug.chatwithmepro.RootChecker;
 import com.efojug.chatwithmepro.databinding.FragmentGalleryBinding;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.concurrent.Executor;
 
 public class GalleryFragment extends Fragment {
@@ -42,6 +46,41 @@ public class GalleryFragment extends Fragment {
     public static Boolean isChecked = false;
     private BiometricPrompt biometricPrompt;
     private BiometricPrompt.PromptInfo promptInfo;
+
+
+    public void writeFileString(File file, String str){
+        if(file.canWrite()){
+            try {
+                FileOutputStream fileOutputStream = new FileOutputStream(file);
+                fileOutputStream.write(str.getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else {
+            toast("没给权限保存你马配置文件");
+        }
+    }
+    File config = new File("/data/com.efojug.chatwithmepro/files/config");
+
+    {
+        if(config.exists()){
+            toast("配置文件已经存在");
+        } else {
+            toast("配置文件不存在");
+        }
+    }
+
+    @Override
+    public void onPause() {
+        writeFileString(config, username);
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        writeFileString(new File("/data/com.efojug.chatwithmepro/files/config"), username);
+        super.onStop();
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         MainActivity.Vibrate(2);
@@ -90,7 +129,7 @@ public class GalleryFragment extends Fragment {
                     .setNegativeButtonText("取消")
                     .build();
         } catch (Exception e) {
-            toast("验证失败："+e.getMessage());
+            toast("验证失败：" + e.getMessage());
             e.printStackTrace();
         }
         if (!isChecked) {
