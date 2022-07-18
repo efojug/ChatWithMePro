@@ -5,7 +5,6 @@ import static com.efojug.chatwithmepro.MainActivity.toast;
 import static com.efojug.chatwithmepro.MainActivity.user;
 import static com.efojug.chatwithmepro.MainActivity.username;
 
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,9 +25,6 @@ import com.efojug.chatwithmepro.R;
 import com.efojug.chatwithmepro.RootChecker;
 import com.efojug.chatwithmepro.databinding.FragmentGalleryBinding;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.concurrent.Executor;
 
 public class GalleryFragment extends Fragment {
@@ -46,32 +42,6 @@ public class GalleryFragment extends Fragment {
     public static Boolean isChecked = false;
     private BiometricPrompt biometricPrompt;
     private BiometricPrompt.PromptInfo promptInfo;
-
-
-    public void writeFileString(String str){
-        if(new File("/data/com.efojug.chatwithmepro/files/config").canWrite()){
-            try {
-                FileOutputStream fileOutputStream = new FileOutputStream("/data/com.efojug.chatwithmepro/files/config");
-                fileOutputStream.write(str.getBytes());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }else {
-            toast("未获得文件读写权限");
-        }
-    }
-
-    @Override
-    public void onPause() {
-        writeFileString(username);
-        super.onPause();
-    }
-
-    @Override
-    public void onStop() {
-        writeFileString(username);
-        super.onStop();
-    }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         MainActivity.Vibrate(2);
@@ -155,7 +125,7 @@ public class GalleryFragment extends Fragment {
             ((TextView) root.findViewById(R.id.givenROOT)).setText(givenRooted);
             ((TextView) root.findViewById(R.id.BusyBox)).setText(Busybox);
         }
-        if (Login == false) {
+        if (!Login) {
             ((EditText) root.findViewById(R.id.username)).setText(username);
             root.findViewById(R.id.changeUsername).setVisibility(View.INVISIBLE);
             root.findViewById(R.id.changeUsernameOK).setVisibility(View.INVISIBLE);
@@ -181,7 +151,6 @@ public class GalleryFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        writeFileString(username);
         super.onDestroyView();
         binding = null;
 
