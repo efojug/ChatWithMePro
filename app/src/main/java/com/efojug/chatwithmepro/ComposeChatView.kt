@@ -100,16 +100,6 @@ fun ChatRoom(list: MutableList<ChatData>) {
     }
 }
 
-fun autoSend(msg: String) {
-    ChatDataManager.add(
-        ChatData(
-            username,
-            LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM-dd HH:mm:ss")).toString(),
-            msg
-        )
-    )
-}
-
 @Composable
 fun MsgItem(chatData: ChatData) {
     Box(modifier = Modifier.fillMaxWidth()) {
