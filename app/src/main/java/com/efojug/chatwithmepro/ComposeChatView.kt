@@ -7,11 +7,17 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.filled.Send
+import androidx.compose.material3.Icon
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -19,6 +25,7 @@ import com.efojug.chatwithmepro.MainActivity.user
 import com.efojug.chatwithmepro.MainActivity.username
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import androidx.compose.material.Icon as MaterialIcon
 
 private var text by mutableStateOf("")
 private var inputBox by mutableStateOf(true)
@@ -42,32 +49,32 @@ fun ChatRoom(list: MutableList<ChatData>) {
             modifier = Modifier.padding(bottom = 20.dp, start = 8.dp, end = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            val focusManager = LocalFocusManager.current
             OutlinedTextField(
                 singleLine = false,
                 enabled = inputBox,
                 maxLines = 5,
                 value = text,
+                shape = RoundedCornerShape(8.dp),
                 onValueChange = {
                     text = it
                 },
                 colors = TextFieldDefaults.textFieldColors(
-                    focusedIndicatorColor = Color(0xFF40E0D0),
-                    unfocusedIndicatorColor = Color(0xFF1E90FF),
+                    focusedIndicatorColor = Color(0x0040E0D0),
+                    unfocusedIndicatorColor = Color(0x001E90FF),
                     errorIndicatorColor = Color.Red,
                     disabledIndicatorColor = Color.Gray
                 ), modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
+                    .width(280.dp)
                     .height(48.dp)
             )
             Spacer(modifier = Modifier.padding(horizontal = 4.dp))
             Button(
                 enabled = text.isNotBlank(),
                 modifier = Modifier
+                    .width(100.dp)
                     .height(48.dp),
+                shape = RoundedCornerShape(8.dp),
                 onClick = {
-                    focusManager.clearFocus()
                     MainActivity.sendNotification(text)
                     MainActivity.Vibrate(2)
                     if (user[0]) ChatDataManager.add(
@@ -90,11 +97,15 @@ fun ChatRoom(list: MutableList<ChatData>) {
                     text = ""
                 },
                 elevation = ButtonDefaults.elevation(0.dp),
-//                enabled = false,
-                shape = RoundedCornerShape(8.dp),
                 colors = ButtonDefaults.buttonColors(Color(0xFF06C361))
             ) {
-                Text(text = "发送", color = Color.White)
+                if (text.isBlank()) {
+                    Text(text = "发送", color = Color.Black)
+                    Icon(painter = painterResource(id = R.drawable.ic_reply_icon), contentDescription = null, tint = Color.Black)
+                } else {
+                    Text(text = "发送", color = Color.White)
+                    Icon(painter = painterResource(id = R.drawable.ic_reply_icon), contentDescription = null, tint = Color.White)
+                }
             }
         }
     }
@@ -115,7 +126,7 @@ fun MsgItem(chatData: ChatData) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = if (chatData.userName == "efojug") Arrangement.End else Arrangement.Start
         ) {
-            Icon(
+            MaterialIcon(
                 imageVector = Icons.Default.AccountBox,
                 contentDescription = "",
                 modifier = Modifier
