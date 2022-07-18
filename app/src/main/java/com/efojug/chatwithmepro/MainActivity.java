@@ -29,8 +29,6 @@ import androidx.navigation.ui.NavigationUI;
 import com.efojug.chatwithmepro.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
 
-import com.efojug.chatwithmepro.network.NetworkClient;
-
 public class MainActivity extends AppCompatActivity {
 
     private BiometricPrompt biometricPrompt;
@@ -101,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void ChangeUsernameOK(View view) {
-        if (((EditText) findViewById(R.id.username)).getText().toString().isBlank()) {
+        if (((EditText) findViewById(R.id.username)).getText().toString().equals("")) {
             toast("用户名不能为空");
         } else {
             username = ((EditText) findViewById(R.id.username)).getText().toString();
@@ -137,9 +135,13 @@ public class MainActivity extends AppCompatActivity {
 
     public static void sendNotification(String msg) {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(MyApplication.context, 0, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(MyApplication.context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
         // Build a PendingIntent for the reply action to trigger.
-        PendingIntent replyPendingIntent = PendingIntent.getBroadcast(MyApplication.context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            PendingIntent replyPendingIntent = PendingIntent.getBroadcast(MyApplication.context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        } else {
+            PendingIntent replyPendingIntent = PendingIntent.getBroadcast(MyApplication.context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        }
         if (!notificationUpdate) {
             //获取系统通知服务
             mNotificationManager = (NotificationManager) MyApplication.context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -149,30 +151,29 @@ public class MainActivity extends AppCompatActivity {
             //创建通知
             mBuilder = new NotificationCompat.Builder(MyApplication.context, CHANNEL_ID)
                     .setContentTitle("聊天室")
-                    .setContentText("[" + num + "条]" + username + "：" + msg)
+                    .setContentText("[" + num + "条] " + username + "：" + msg)
                     .setWhen(System.currentTimeMillis())
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .setPriority(NotificationCompat.PRIORITY_MAX)
                     .setContentIntent(pendingIntent)
                     .setAutoCancel(true);
             if (num > 999) {
-                mBuilder.setContentText("[999+条]" + username + "：" + msg);
+                mBuilder.setContentText("[999+条] " + username + "：" + msg);
             }
             if (num == 1) {
                 mBuilder.setContentText(username + "：" + msg);
             }
             //发送通知( id唯⼀,⽤于更新通知时对应旧通知; 通过mBuilder.build()拿到notification对象 )
-            mNotificationManager.notify(notificationId, mBuilder.build());
         } else {
             if (num > 999) {
-                mBuilder.setContentText("[999+条]" + username + "：" + msg);
+                mBuilder.setContentText("[999+条] " + username + "：" + msg);
             } else if (num == 1) {
                 mBuilder.setContentText(username + "：" + msg);
             } else {
-                mBuilder.setContentText("[" + num + "条]" + username + "：" + msg);
+                mBuilder.setContentText("[" + num + "条] " + username + "：" + msg);
             }
-            mNotificationManager.notify(notificationId, mBuilder.build());
         }
+        mNotificationManager.notify(notificationId, mBuilder.build());
         notificationUpdate = true;
         num += 1;
     }

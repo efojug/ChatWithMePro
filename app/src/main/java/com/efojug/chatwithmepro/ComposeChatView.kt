@@ -1,6 +1,5 @@
 package com.efojug.chatwithmepro
 
-import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -12,6 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -21,6 +21,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 private var text by mutableStateOf("")
+private var inputBox by mutableStateOf(true)
 
 @Composable
 fun ChatRoom(list: MutableList<ChatData>) {
@@ -37,70 +38,56 @@ fun ChatRoom(list: MutableList<ChatData>) {
             }
         }
 
-        var height by remember {
-            mutableStateOf(0)
-        }
-
-        val heightDp by animateDpAsState(targetValue = if (height == 0) 40.dp else (height + 40).dp)
-
         Row(
             modifier = Modifier.padding(bottom = 20.dp, start = 8.dp, end = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            var b by remember {
-                mutableStateOf(12)
-            }
-            TextField(
+            val focusManager = LocalFocusManager.current
+            OutlinedTextField(
                 singleLine = false,
+                enabled = inputBox,
                 maxLines = 5,
                 value = text,
                 onValueChange = {
                     text = it
-//                    if (it.length > b && height <= 40) {
-//                        b += 18
-//                        height += 18
-//                    } else if (it.length < 18) {
-//                        b = 16
-//                        height = 0
-//                    }
                 },
                 colors = TextFieldDefaults.textFieldColors(
-                    focusedIndicatorColor = Color(0xFF90EE90),
+                    focusedIndicatorColor = Color(0xFF40E0D0),
                     unfocusedIndicatorColor = Color(0xFF1E90FF),
                     errorIndicatorColor = Color.Red,
                     disabledIndicatorColor = Color.Gray
                 ), modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
-                    .heightIn(max = 40.dp)
+                    .height(48.dp)
             )
             Spacer(modifier = Modifier.padding(horizontal = 4.dp))
             Button(
                 enabled = text.isNotBlank(),
+                modifier = Modifier
+                    .height(48.dp),
                 onClick = {
-                    if (text.isNotBlank()) {
-                        MainActivity.sendNotification(text)
-                        MainActivity.Vibrate(2)
-                        if (user[0]) ChatDataManager.add(
-                            ChatData(
-                                username,
-                                LocalDateTime.now()
-                                    .format(DateTimeFormatter.ofPattern("MM-dd HH:mm:ss"))
-                                    .toString(),
-                                text
-                            )
-                        ) else ChatDataManager.add(
-                            ChatData(
-                                "Guest",
-                                LocalDateTime.now()
-                                    .format(DateTimeFormatter.ofPattern("MM-dd HH:mm:ss"))
-                                    .toString(),
-                                text
-                            )
+                    focusManager.clearFocus()
+                    MainActivity.sendNotification(text)
+                    MainActivity.Vibrate(2)
+                    if (user[0]) ChatDataManager.add(
+                        ChatData(
+                            username,
+                            LocalDateTime.now()
+                                .format(DateTimeFormatter.ofPattern("MM-dd HH:mm:ss"))
+                                .toString(),
+                            text
                         )
-                        text = ""
-                        height = 0
-                    }
+                    ) else ChatDataManager.add(
+                        ChatData(
+                            "Guest",
+                            LocalDateTime.now()
+                                .format(DateTimeFormatter.ofPattern("MM-dd HH:mm:ss"))
+                                .toString(),
+                            text
+                        )
+                    )
+                    text = ""
                 },
                 elevation = ButtonDefaults.elevation(0.dp),
 //                enabled = false,

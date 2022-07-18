@@ -55,7 +55,6 @@ object RootUtilities {
             for (where in places) {
                 if (File(where + "su").exists()) {
                     path = where + "su"
-                    found = true
                     break
                 }
             }
@@ -128,16 +127,4 @@ object RootUtilities {
     }
 
 
-    val isOSSandAbove: Boolean
-        get() {
-            val sdkInt = Build.VERSION.SDK_INT
-            var releaseInt = 0
-            try {
-                val releaseStr = Build.VERSION.RELEASE
-                releaseInt = releaseStr.toInt()
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-            return sdkInt >= 31
-        }
 }
