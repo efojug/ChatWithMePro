@@ -51,6 +51,8 @@ fun ChatRoom(list: MutableList<ChatData>) {
                 mutableStateOf(12)
             }
             TextField(
+                singleLine = false,
+                maxLines = 5,
                 value = text,
                 onValueChange = {
                     text = it
@@ -70,7 +72,7 @@ fun ChatRoom(list: MutableList<ChatData>) {
                 ), modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
-                    .heightIn(max = 68.dp)
+                    .heightIn(max = 40.dp)
             )
             Spacer(modifier = Modifier.padding(horizontal = 4.dp))
             Button(
