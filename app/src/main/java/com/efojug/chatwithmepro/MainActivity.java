@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.UiModeManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -17,7 +18,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.biometric.BiometricPrompt;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.RemoteInput;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -31,8 +31,6 @@ import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private BiometricPrompt biometricPrompt;
-    private BiometricPrompt.PromptInfo promptInfo;
     private AppBarConfiguration mAppBarConfiguration;
     public static boolean[] user = {false};
     public static boolean Login = false;
@@ -50,11 +48,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-//      注意要清除 FLAG_TRANSLUCENT_STATUS flag
-//        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//        getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimary));
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setSupportActionBar(binding.appBarMain.toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -96,6 +91,10 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.Login).setVisibility(View.VISIBLE);
         findViewById(R.id.outLogin).setVisibility(View.INVISIBLE);
         user[0] = false;
+    }
+
+    public static boolean getNightMode() {
+        return ((UiModeManager) MyApplication.context.getSystemService(Context.UI_MODE_SERVICE)).getNightMode() == UiModeManager.MODE_NIGHT_YES;
     }
 
     public void ChangeUsernameOK(View view) {

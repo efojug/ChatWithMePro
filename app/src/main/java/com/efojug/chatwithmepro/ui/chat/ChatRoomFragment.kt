@@ -9,11 +9,6 @@ import com.efojug.chatwithmepro.ChatDataManager
 import com.efojug.chatwithmepro.ChatRoom
 import com.efojug.chatwithmepro.databinding.FragmentChatRoomBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 /**
  * A simple [Fragment] subclass.
  * Use the [ChatRoomFragment.newInstance] factory method to
@@ -25,7 +20,7 @@ class ChatRoomFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = FragmentChatRoomBinding.inflate(inflater, container, false)
         binding.composeView.setContent {
             ChatRoom(list = ChatDataManager.getAllChatData())

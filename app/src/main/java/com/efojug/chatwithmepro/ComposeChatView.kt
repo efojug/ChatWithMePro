@@ -7,7 +7,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
-import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -16,13 +15,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.efojug.chatwithmepro.MainActivity.user
-import com.efojug.chatwithmepro.MainActivity.username
+import com.efojug.chatwithmepro.MainActivity.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import androidx.compose.material.Icon as MaterialIcon
@@ -32,7 +29,7 @@ private var inputBox by mutableStateOf(true)
 
 @Composable
 fun ChatRoom(list: MutableList<ChatData>) {
-    MainActivity.Vibrate(2)
+    Vibrate(2)
     Column {
         LazyColumn(
             modifier = Modifier
@@ -46,7 +43,8 @@ fun ChatRoom(list: MutableList<ChatData>) {
         }
 
         Row(
-            modifier = Modifier.padding(bottom = 20.dp, start = 8.dp, end = 8.dp),
+            modifier = Modifier
+                .padding(bottom = 20.dp, start = 8.dp, end = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             OutlinedTextField(
@@ -75,8 +73,8 @@ fun ChatRoom(list: MutableList<ChatData>) {
                     .height(48.dp),
                 shape = RoundedCornerShape(8.dp),
                 onClick = {
-                    MainActivity.sendNotification(text)
-                    MainActivity.Vibrate(2)
+                    sendNotification(text)
+                    Vibrate(2)
                     if (user[0]) ChatDataManager.add(
                         ChatData(
                             username,
@@ -101,10 +99,18 @@ fun ChatRoom(list: MutableList<ChatData>) {
             ) {
                 if (text.isBlank()) {
                     Text(text = "发送", color = Color.Black)
-                    Icon(painter = painterResource(id = R.drawable.ic_reply_icon), contentDescription = null, tint = Color.Black)
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_reply_icon),
+                        contentDescription = null,
+                        tint = Color.Black
+                    )
                 } else {
                     Text(text = "发送", color = Color.White)
-                    Icon(painter = painterResource(id = R.drawable.ic_reply_icon), contentDescription = null, tint = Color.White)
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_reply_icon),
+                        contentDescription = null,
+                        tint = Color.White
+                    )
                 }
             }
         }

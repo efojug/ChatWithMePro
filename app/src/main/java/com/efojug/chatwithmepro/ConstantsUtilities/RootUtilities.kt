@@ -1,6 +1,5 @@
 package com.efojug.chatwithmepro.ConstantsUtilities
 
-import android.os.Build
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
