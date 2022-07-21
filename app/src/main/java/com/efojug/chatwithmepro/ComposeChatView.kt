@@ -1,5 +1,7 @@
 package com.efojug.chatwithmepro
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -30,12 +32,12 @@ private var inputBox by mutableStateOf(true)
 @Composable
 fun ChatRoom(list: MutableList<ChatData>) {
     Vibrate(2)
-    Column {
+    Column(modifier = Modifier.background(if (getNightMode()) Color.Black else Color.White)) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .weight(1f)
-                .padding(top = 20.dp)
+                .padding(top = 20.dp, bottom = 4.dp)
         ) {
             items(list) { item ->
                 MsgItem(item)
@@ -119,7 +121,10 @@ fun ChatRoom(list: MutableList<ChatData>) {
 
 @Composable
 fun MsgItem(chatData: ChatData) {
-    Box(modifier = Modifier.fillMaxWidth()) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
         Text(
             text = chatData.time,
             color = Color.Gray,
@@ -129,16 +134,27 @@ fun MsgItem(chatData: ChatData) {
     }
     Surface {
         Row(
+            modifier = Modifier.background(if (getNightMode()) Color.Black else Color.White),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = if (chatData.userName == "efojug") Arrangement.End else Arrangement.Start
         ) {
-            MaterialIcon(
-                imageVector = Icons.Default.AccountBox,
-                contentDescription = "",
-                modifier = Modifier
-                    .size(32.dp)
-                    .align(Alignment.Top)
-            )
+            if (chatData.userName == "efojug") {
+                Image(
+                    painter = painterResource(id = R.mipmap.ic_launcher_foreground),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(32.dp)
+                        .align(Alignment.Top)
+                )
+            } else {
+                MaterialIcon(
+                    imageVector = Icons.Default.AccountBox,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(32.dp)
+                        .align(Alignment.Top)
+                )
+            }
             Column {
                 Text(text = chatData.userName, fontSize = 12.sp, color = Color.LightGray)
                 Surface(
@@ -163,7 +179,6 @@ fun MsgItem(chatData: ChatData) {
         }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable
