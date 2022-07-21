@@ -1,17 +1,20 @@
-// Write C++ code here.
-//
-// Do not forget to dynamically load the C++ library into your application.
-//
-// For instance,
-//
-// In MainActivity.java:
-//    static {
-//       System.loadLibrary("chatwithmepro");
-//    }
-//
-// Or, in MainActivity.kt:
-//    companion object {
-//      init {
-//         System.loadLibrary("chatwithmepro")
-//      }
-//    }
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netdb.h>
+#include <arpa/inet.h>
+#include <sys/wait.h>
+#include <iostream>
+#include <algorithm>
+#include <cmath>
+#include<string>
+#include<list>
+#include<map>
+#include<queue>
+#include<vector>
+#include<stack>
+int main()
+{
+    std::cout << "Hello, World!" << std::endl;
+}
