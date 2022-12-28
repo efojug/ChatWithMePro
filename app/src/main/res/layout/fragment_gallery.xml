@@ -113,7 +113,6 @@
         app:layout_constraintVertical_bias="0.020" />
 
     <TextView
-        android:id="@+id/textView6"
         android:layout_width="85dp"
         android:layout_height="20dp"
         android:text="您的设备为："
@@ -227,7 +226,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.360" />
-
 
     <TextView
         android:layout_width="85dp"

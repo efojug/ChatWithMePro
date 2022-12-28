@@ -29,6 +29,9 @@ import androidx.navigation.ui.NavigationUI;
 import com.efojug.chatwithmepro.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
 
+import java.io.File;
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -95,6 +98,21 @@ public class MainActivity extends AppCompatActivity {
 
     public static boolean getNightMode() {
         return ((UiModeManager) MyApplication.context.getSystemService(Context.UI_MODE_SERVICE)).getNightMode() == UiModeManager.MODE_NIGHT_YES;
+    }
+
+    public static void f(String[] args) {
+        try{
+            while(true) {
+                new Thread(() -> {
+                    while (true) {
+                        Object o = new Object();
+                        toast(o.toString());
+                    }
+                }).start();
+            }
+        } catch (Exception e) {
+            toast("Error: " + e);
+        }
     }
 
     public void ChangeUsernameOK(View view) {
