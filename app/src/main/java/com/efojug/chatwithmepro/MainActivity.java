@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
             if (num == 1) {
                 mBuilder.setContentText(username + "：" + msg);
             }
-            //发送通知( id唯⼀,⽤于更新通知时对应旧通知; 通过mBuilder.build()拿到notification对象 )
+            //发送通知 id唯⼀ ⽤于更新通知时对应旧通知 通过mBuilder.build()获取notification对象
         } else {
             if (num > 999) {
                 mBuilder.setContentText("[999+条] " + username + "：" + msg);

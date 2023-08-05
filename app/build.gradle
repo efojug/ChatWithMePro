@@ -4,15 +4,15 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 34
     compileOptions.encoding="UTF-8"
     def currentVersionCode = getVersionCode()
     defaultConfig {
         applicationId "com.efojug.chatwithmepro"
         minSdk 30
-        targetSdk 32
+        targetSdk 34
         versionCode currentVersionCode
-        versionName '8.2.3-stable04'
+        versionName '8.2.4-alpha02'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
